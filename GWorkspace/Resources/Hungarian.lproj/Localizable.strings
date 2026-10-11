@@ -39,14 +39,6 @@
 		"Permissions" = "Hozzáférés";	
 	"Finder" = "Fájl keresése";
 	"Processes..." = "Folyamatok...";
-	"Fiend" = "Pult";
-		"Show Fiend" = "Pult megmutatása";
-		"Hide Fiend" = "Pult elrejtése";
-		"Add Layer..." = "Munkaasztal hozzáadása...";
-		"Remove Current Layer" = "Jelenlegi munkaasztal megszüntetése";
-		"Rename Current Layer" = "Jelenlegi munkaasztal átnevezése";
-		"Layers" = "Munkaasztalok";
-	"DeskTop Shelf" = "Asztali polc";	
 	"XTerm" = "XTerm";
 	
 "Windows" = "Ablakok";
@@ -236,20 +228,6 @@
 "No arguments!" = "Nincs semmi megadva!";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Új munkaasztal";
-"A layer with this name is already present!" = "Már van ilyen nevû munkaasztal!";
-"You can't remove the last layer!" = "Az utolsó munkaasztalt nem lehet megszüntetni!";
-"Remove layer" = "Munkaasztal megszüntetése";
-"Are you sure that you want to remove this layer?" = "Biztos, hogy meg akarja szüntetni ezt a munkaasztalt?";
-"Rename Layer" = "Munkaasztal átnevezése";
-"You can't dock multiple paths!" = "Nem lehet többféle elérési utat megadni!";
-"This object is already present in this layer!" = "Ez az elem már szerepel ezen a munkaasztalon!";
-	
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */

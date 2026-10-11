@@ -40,14 +40,6 @@
 		"Permissions" = "Rechten";
 	"Finder" = "Zoeker";
 	"Processes..." = "Processen...";
-	"Fiend" = "Clip";
-		"Show Fiend" = "Toon Clip";
-		"Hide Fiend" = "Verberg Clip";
-		"Add Layer..." = "Voeg Laag Toe...";
-		"Remove Current Layer" = "Verwijder Huidige Laag";
-		"Rename Current Layer" = "Hernoem Huidige Laag";
-		"Layers" = "Lagen";
-	"DeskTop Shelf" = "Bureaublad";
 	"XTerm" = "XTerm";
 
 "Windows" = "Vensters";
@@ -235,20 +227,6 @@
 "No arguments!" = "Geen argumenten!";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nieuwe Laag";
-"A layer with this name is already present!" = "Een laag met die naam is al in gebruik!"; 
-"You can't remove the last layer!" = "Je kan de laatste laag niet verwijderen!";
-"Remove layer" = "Verwijder laag";
-"Are you sure that you want to remove this layer?" = "Ben je zeker dat je deze laag wilt verwijderen?"; 
-"Rename Layer" = "Hernoem Laag";
-"You can't dock multiple paths!" = "Je kan geen meerdere paden dokken!"; 
-"This object is already present in this layer!" = "Dit object zit al in de laag!"; 
-	
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */
@@ -289,11 +267,6 @@
 "Values will apply to the \nnew watchers from now, \nto the existing ones, after the first timeout" = "De waarde worden vanaf nu \ntoegepast op de nieuwe watchers,\nde bestaande na de eerste timeout";
 
 
-/* ShelfPreferences.m */
-	
-"Shelf" = "Shelf";
-	
-	
 /* DefaultEditor.m */            
 
 "Default Editor" = "Standaard editor";

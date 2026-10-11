@@ -55,19 +55,6 @@
 		"Contents" = "Contenus";
 		"Annotations" = "Annotations";
 	"Finder" = "Chercher un fichier";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Montrer le Fiend";
-		"Hide Fiend" = "Masquer le Fiend";
-		"Add Layer..." = "Ajouter un espace de travail...";
-		"Remove Current Layer" = "Supprimer l'espace de travail courant";
-		"Rename Current Layer" = "Renommer l'espace de travail courant";
-		"Layers" = "Espaces de travail";
-	"Tabbed Shelf" = "Étagères";
-		"Show Tabbed Shelf" = "Montrer les étagères";
-                "Hide Tabbed Shelf" = "Masquer les étagères";
-		"Remove Current Tab" = "Supprimer l'étagère";
-		"Rename Current Tab" = "Renommer l'étagère";
-		"Add Tab..." = "Ajouter une étagère...";
 	"Terminal" = "Terminal";
 	"Run..." = "Exécuter...";
 	"History" = "Historique";
@@ -324,20 +311,6 @@
 "includes"="est";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nouvel espace de travail";
-"A layer with this name is already present!" = "Un espace de travail possède déja ce nom !";
-"You can't remove the last layer!" = "Vous ne pouvez supprimer le dernier espace de travail !";
-"Remove layer" = "Supprimer cet espace de travail";
-"Are you sure that you want to remove this layer?" = "Êtes-vous sûr de vouloir supprimer cet espace de travail ?";
-"Rename Layer" = "Renommer cet espace de travail";
-"You can't dock multiple paths!" = "Vous ne pouvez pas stocker plusieurs chemins d'accès !";
-"This object is already present in this layer!" = "Cet objet est déja présent dans cet espace de travail !";
-	
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */

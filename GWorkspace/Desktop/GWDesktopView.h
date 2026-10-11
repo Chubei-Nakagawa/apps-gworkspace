@@ -92,8 +92,6 @@ typedef enum BackImageStyle
 
 - (void)makeIconsGrid;
 
-- (NSImage *)tshelfBackground;
-
 - (void)getDesktopInfo;
 
 - (void)updateDefaults;

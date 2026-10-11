@@ -51,19 +51,6 @@
 		"Contents" = "Zawartość";
 		"Annotations" = "Adnotacje";	
 	"Finder" = "Finder";
-	"Fiend" = "Fiend"; /* TODO: ? */
-		"Show Fiend" = "Show Fiend"; /* TODO: ? */
-		"Hide Fiend" = "Hide Fiend"; /* TODO: ? */
-		"Add Layer..." = "Dodaj warstwę...";
-		"Remove Current Layer" = "Usuń obecną warstwę";
-		"Rename Current Layer" = "Zmień nazwę obecnej warstwy";
-		"Layers" = "Warstwy";
-	"Tabbed Shelf" = "Zakładki";	
-		"Show Tabbed Shelf" = "Pokaż zakładki";
-                "Hide Tabbed Shelf" = "Ukryj zakładki";
-		"Remove Current Tab" = "Usuń obecną zakładkę";
-		"Rename Current Tab" = "Zmień nazwę obecnej zakładki";
-		"Add Tab..." = "Dodaj zakładkę...";
 	"Terminal" = "Terminal";
 	"Run..." = "Uruchom...";
 	"History" = "Historia";
@@ -305,20 +292,6 @@
 "includes"="zawiera";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nowa warstwa";
-"A layer with this name is already present!" = "Warstwa z tą nazwa już istnieje!";
-"You can't remove the last layer!" = "Nie możesz usunąć ostatniej warstwy!";
-"Remove layer" = "Usuń warstwę";
-"Are you sure that you want to remove this layer?" = "Jesteś pewien, że chcesz usunąć tę warstwę?";
-"Rename Layer" = "Zmień nazwę warstwy";
-"You can't dock multiple paths!" = "Nie możesz zadokować wielu ścieżek!";
-"This object is already present in this layer!" = "Ten obiekt już jest w tej warstwie!";
-	
-			
 /* ----------------------- Preference strings --------------------------- */
 
 /* PreferencesWin.m */

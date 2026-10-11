@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=GNUstep window manager
+Comment=This session logs you into GNUstep window manager
+Exec=/usr/local/bin/gswm-session
+DesktopNames=GNUstepWM
+X-GDM-SessionRegisters=true

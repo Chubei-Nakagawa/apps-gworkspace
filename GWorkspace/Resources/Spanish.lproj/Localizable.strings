@@ -58,19 +58,6 @@
                 "Tools" = "Herramientas";
                 "Annotations" = "Anotaciones";
         "Finder" = "Buscador";
-        "Fiend" = "Duente";
-                "Show Fiend" = "Mostrar el Duende";
-                "Hide Fiend" = "Ocultar el Duende";
-                "Add Layer..." = "Añadir capa...";
-                "Remove Current Layer" = "Quitar la capa actual";
-                "Rename Current Layer" = "Renombrar la capa actual";
-                "Layers" = "Capas";
-        "Tabbed Shelf" = "Barra de pestañas";
-                "Show Tabbed Shelf" = "Mostrar Barra de Pestañas";
-                "Hide Tabbed Shelf" = "Ocultar Barra de Pestañas";
-                "Remove Current Tab" = "Remover pestaña actual";
-                "Rename Current Tab" = "Renombrar pestaña actual";
-                "Add Tab..." = "Añadir pestaña";
         "Terminal" = "Terminal";
         "Run..." = "Ejecutar...";
         "History" = "Historial";
@@ -307,20 +294,6 @@
 /* contents */
 "contents" = "contenido";
 "includes" = "que incluya";
-
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nueva Capa";
-"A layer with this name is already present!" = "¡Ya hay una capa con ese nombre!";
-"You can't remove the last layer!" = "¡No puede borrar la última capa!";
-"Remove layer" = "Quitar capa";
-"Are you sure that you want to remove this layer?" = "¿Estás seguro de querer quitar esta capa?";
-"Rename Layer" = "Renombrar capa";
-"You can't dock multiple paths!" = "¡No puede aparcar rutas múltiples!";
-"This object is already present in this layer!" = "¡Este objeto ya está en esta capa!";
-
 
 /* ----------------------- Preference strings --------------------------- */
 

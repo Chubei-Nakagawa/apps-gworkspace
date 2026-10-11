@@ -50,20 +50,6 @@
 	"Processes..." = "Prosesser...";
 	"Applications..." = "Applikasjoner...";
 /*	"File Operations..." = "Filoperasjoner...";	*/
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Vis fiend";
-		"Hide Fiend" = "Skjul fiend";
-		"Add Layer..." = "Nytt skrivebord...";
-		"Remove Current Layer" = "Slett aktuelt skrivebord";
-		"Rename Current Layer" = "Gi skrivebordet nytt navn";
-		"Layers" = "Skriveborder";
-/*	"Tabbed Shelf" = "Tabbed Shelf";
-		"Show Tabbed Shelf" = "Vis Tabbed Shelf";
-		"Hide Tabbed Shelf" = "Skjul Tabbed Shelf";
-		"Remove Current Tab" = "Slett aktuelt faneblad";
-		"Rename Current Tab" = "Gi fanebladet nytt navn";
-		"Add Tab..." = "Nytt faneblad...";
-*/
 	"DeskTop Shelf" = "Desktop Shelf";
 	"XTerm" = "XTerm";
 	
@@ -259,20 +245,6 @@
 "No arguments!" = "Inge argumenter.";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nytt skrivebord";
-"A layer with this name is already present!" = "Et skrivebord med dette navnet eksisterer alerede.";
-"You can't remove the last layer!" = "Du kan ikke fjerne det siste skrivebordet.";
-"Remove layer" = "Fjerne skrivebordet?";
-"Are you sure that you want to remove this layer?" = "Er du sikker at skrivebordet skal fjernes?";
-"Rename Layer" = "Gi skrivebordet nytt navn";
-"You can't dock multiple paths!" = "Du kan ikke dokke mangfoldige adresser"
-"This object is already present in this layer!" = "Dette objektet eksisterer allerede i dette skrivebordet.";
-	
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */

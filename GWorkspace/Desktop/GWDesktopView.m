@@ -407,7 +407,6 @@
 - (void)makeIconsGrid
 {
   NSRect dckr = [manager dockReservedFrame];
-  NSRect tshfr = [manager tshelfReservedFrame];
   NSRect mmfr = [manager macmenuReservedFrame];
   NSRect gridrect = screenFrame;
   unsigned ymargin;
@@ -421,8 +420,6 @@
 
   [self calculateGridSize];
 
-  gridrect.origin.y += tshfr.size.height;
-  gridrect.size.height -= tshfr.size.height;
   gridrect.size.width -= dckr.size.width;
   gridrect.size.height -= mmfr.size.height;
 
@@ -507,25 +504,6 @@
     {
       grid[i] = NSIntegralRect(grid[i]);
     }
-}
-
-- (NSImage *)tshelfBackground
-{
-  CREATE_AUTORELEASE_POOL (pool);
-  NSSize size = NSMakeSize([self frame].size.width, 112);
-  NSImage *image = [[NSImage alloc] initWithSize: size];
-
-  [image lockFocus];
-  NSCopyBits([[self window] gState],
-	     NSMakeRect(0, 0, size.width, size.height),
-	     NSMakePoint(0.0, 0.0));
-  [image unlockFocus];
-
-  RETAIN (image);
-  RELEASE (image);
-  RELEASE (pool);
-
-  return AUTORELEASE(image);
 }
 
 - (void)getDesktopInfo
@@ -992,17 +970,6 @@ static void GWHighlightFrameRect(NSRect aRect)
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-  NSPoint p = [theEvent locationInWindow];
-
-  if (NSPointInRect(p, [manager tshelfActivateFrame]))
-    {
-      [manager mouseEnteredTShelfActivateFrame];
-    }
-  else if (NSPointInRect(p, [manager tshelfReservedFrame]) == NO)
-    {
-      [manager mouseExitedTShelfActiveFrame];
-    }
-
   [super mouseMoved: theEvent];
 }
 
@@ -1771,16 +1738,6 @@ static void GWHighlightFrameRect(NSRect aRect)
   NSPoint dpoint = [sender draggingLocation];
   NSUInteger index;
 
-  if (NSPointInRect(dpoint, [manager tshelfActivateFrame]))
-    {
-      [manager mouseEnteredTShelfActivateFrame];
-      return NSDragOperationNone;
-    }
-  if (NSPointInRect(dpoint, [manager tshelfReservedFrame]) == NO)
-    {
-      [manager mouseExitedTShelfActiveFrame];
-    }
-
   if (isDragTarget == NO)
     {
       return NSDragOperationNone;
@@ -1847,19 +1804,12 @@ static void GWHighlightFrameRect(NSRect aRect)
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-  NSPoint dpoint = [sender draggingLocation];
-
   DESTROY (dragIcon);
   if (insertIndex != NSNotFound)
     {
       [self setNeedsDisplayInRect: grid[insertIndex]];
     }
   isDragTarget = NO;
-
-  if (NSPointInRect(dpoint, [manager tshelfReservedFrame]) == NO)
-    {
-      [manager mouseExitedTShelfActiveFrame];
-    }
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender

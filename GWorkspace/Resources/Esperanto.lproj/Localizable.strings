@@ -59,19 +59,6 @@
 		"Permissions" = "Permesoj";
 		"Annotations" = "Notoj";
 	"Finder" = "Trovilo";
-	"Fiend" = "Fantomo";
-		"Show Fiend" = "Montru fantomon";
-		"Hide Fiend" = "Kaŝu fantomon";
-		"Add Layer..." = "Nova tabulo...";
-		"Remove Current Layer" = "Forigu aktualan tabulon";
-		"Rename Current Layer" = "Alinomu aktualan tabulon";
-		"Layers" = "Tabuloj";
-        "Tabbed Shelf" = "Taba breto";
-                "Show Tabbed Shelf" = "Montru taban breton";
-                "Hide Tabbed Shelf" = "Kaŝu taban breton";
-                "Remove Current Tab" = "Forigu aktualan tabon";
-                "Rename Current Tab" = "Alinomu aktualan tabon";
-                "Add Tab..." = "Nova tabo...";
 	"Terminal" = "Terminalo";
 	"Run..." = "Rulu...";
 	"History" = "Historio";
@@ -337,19 +324,6 @@
 "No arguments!" = "Neniuj operandoj.";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Nova tabulo";
-"A layer with this name is already present!" = "Tabulo kun ĉi tiu nomo jam ekzistas.";
-"You can't remove the last layer!" = "Vi ne povas forigi la lastan tabulon.";
-"Remove layer" = "Forigu tabulon";
-"Are you sure that you want to remove this layer?" = "Ĉu vi estas certa ke vi volas forigi tiun tabulon?";
-"Rename Layer" = "Alinomu tabulon";
-"You can't dock multiple paths!" = "Vi ne povas doki pluroblajn dosierindikojn";
-"This object is already present in this layer!" = "Ĉi tiu objekto jam ekzistas sur tiu tabulo.";
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */

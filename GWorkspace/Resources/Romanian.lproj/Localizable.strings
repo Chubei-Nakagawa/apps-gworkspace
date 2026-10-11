@@ -36,14 +36,6 @@
 		"Permissions" = "Permisii";	
 	"Finder" = "Finder";
 	"Processes..." = "Procese...";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Aratã Fiend-ul";
-		"Hide Fiend" = "Ascunde Fiend-ul";
-		"Add Layer..." = "Adaugã un Layer...";
-		"Remove Current Layer" = "Scoate Layer-ul Curent";
-		"Rename Current Layer" = "Redenumeºte Layer-ul Curent";
-		"Layers" = "Layers";
-	"DeskTop Shelf" = "DeskTop Shelf";	
 	"XTerm" = "XTerm";
 	
 "Windows" = "Ferestre";

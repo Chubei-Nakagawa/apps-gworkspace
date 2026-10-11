@@ -1,0 +1,13 @@
+#!/bin/bash
+### gnu compiler and runtime
+export RUNTIME="gnu"
+export CC=gcc
+export CXX=g++
+export CFLAGS="-g -O0 -std=gnu11 -Wno-error=incompatible-pointer-types"
+export OBJCFLAGS="-g -O0 -std=gnu11 -Wno-error=int-conversion -Wno-error=incompatible-pointer-types -Wno-unknown-pragmas -Wno-expansion-to-defined -Wno-unused-variable"
+export MKARGS="-j`nproc`"
+
+. /usr/share/GNUstep/Makefiles/GNUstep.sh
+
+./configure || exit 1
+make $MKARGS || exit 1

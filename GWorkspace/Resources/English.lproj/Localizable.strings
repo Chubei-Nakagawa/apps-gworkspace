@@ -51,19 +51,6 @@
 		"Contents" = "Contents";
 		"Annotations" = "Annotations";	
 	"Finder" = "Finder";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Show Fiend";
-		"Hide Fiend" = "Hide Fiend";
-		"Add Layer..." = "Add Layer...";
-		"Remove Current Layer" = "Remove Current Layer";
-		"Rename Current Layer" = "Rename Current Layer";
-		"Layers" = "Layers";
-	"Tabbed Shelf" = "Tabbed Shelf";	
-		"Show Tabbed Shelf" = "Show Tabbed Shelf";
-                "Hide Tabbed Shelf" = "Hide Tabbed Shelf";
-		"Remove Current Tab" = "Remove Current Tab";
-		"Rename Current Tab" = "Rename Current Tab";
-		"Add Tab..." = "Add Tab...";
 	"Terminal" = "Terminal";
 	"Run..." = "Run...";
 	"History" = "History";
@@ -305,20 +292,6 @@
 "includes"="includes";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "New Layer";
-"A layer with this name is already present!" = "A layer with this name is already present!";
-"You can't remove the last layer!" = "You can't remove the last layer!";
-"Remove layer" = "Remove layer";
-"Are you sure that you want to remove this layer?" = "Are you sure you want to remove this layer?";
-"Rename Layer" = "Rename Layer";
-"You can't dock multiple paths!" = "You can't dock multiple paths!";
-"This object is already present in this layer!" = "This object is already present in this layer!";
-	
-			
 /* ----------------------- Preference strings --------------------------- */
 
 /* PreferencesWin.m */

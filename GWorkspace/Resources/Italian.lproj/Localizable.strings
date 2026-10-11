@@ -51,19 +51,6 @@
 		"Contents" = "Contenuto";
                 "Annotations" = "Annotazioni";
 	"Finder" = "Finder";
-	"Fiend" = "Folletto";
-		"Show Fiend" = "Mostra il Folletto";
-		"Hide Fiend" = "Nascondi il Folletto";
-		"Add Layer..." = "Aggiungi un Livello...";
-		"Remove Current Layer" = "Rimuovi il Livello corrente";
-		"Rename Current Layer" = "Rinomina il Livello corrente";
-		"Layers" = "Livelli";
-	"Tabbed Shelf" = "Scaffalatura";	
-		"Show Tabbed Shelf" = "Mostra Scaffalatura";
-                "Hide Tabbed Shelf" = "Nascondi Scaffalatura";
-		"Remove Current Tab" = "Rimuovi Scaffale Corrente";
-		"Rename Current Tab" = "Rinomina Scaffale Corrente";
-		"Add Tab..." = "Aggiungi Scaffale...";
 	"Terminal" = "Terminale";
 	"Run..." = "Esegui...";
 	"History" = "Cronologia";
@@ -301,20 +288,6 @@
 /* contents */
 "contents"="Contenuto";
 "includes"="contiene";
-
-/* ----------------------- Fiend strings --------------------------- *\
-
-/* Fiend.m */
-
-"New Layer" = "Nuovo Livello";
-"A layer with this name is already present!" = "E' già presente un livello vcon lo stesso nome!";
-"You can't remove the last layer!" = "Non si può eliminare l'ultimo livello!";
-"Remove layer" = "Rimuovi livello";
-"Are you sure that you want to remove this layer?" = "Sei sicuro di voler rimuovere questo livello?";
-"Rename Layer" = "Rinomina Livello";
-"You can't dock multiple paths!" = "Non puoi aggiungere percorsi multipli!";
-"This object is already present in this layer!" = "Questo oggetto e già presente in questo layer!";
-
 
 /* ----------------------- Preferences strings --------------------------- *\
 

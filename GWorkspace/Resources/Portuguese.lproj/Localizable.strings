@@ -38,14 +38,6 @@
 		"Permissions" = "Permissões";	
 	"Finder" = "Localizador";
 	"Processes..." = "Processos...";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Mostrar Fiend"; /* R// O que é Fiend? */
-		"Hide Fiend" = "Ocultar Fiend";
-		"Add Layer..." = "Adicionar Camada..." 
-		"Remove Current Layer" = "Apagar Camada Atual";
-		"Rename Current Layer" = "Renomear Camada Atual";
-		"Layers" = "Camadas";
-	"DeskTop Shelf" = "DeskTop Shelf";	
 	"XTerm" = "XTerm";
 	
 "Windows" = "Janelas";
@@ -236,20 +228,6 @@
 "No arguments!" = "Sem argumentos!";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m - Como traduzir Fiend? */
-
-"New Layer" = "Nova Camada";
-"A layer with this name is already present!" = "Já existe uma camada com este nome!";
-"You can't remove the last layer!" = "Não é possível remover a última camada!";
-"Remove layer" = "Remover camada";
-"Are you sure that you want to remove this layer?" = "Tem certeza de que deseja remover esta camada?";
-"Rename Layer" = "Renomear camada";
-"You can't dock multiple paths!" = "Você não pode anexar múltiplos caminhos!";
-"This object is already present in this layer!" = "Este objeto já está nesta camada!"
-	
-			
 /* ----------------------- Preference strings --------------------------- */
 
 /* PreferencesWin.m */

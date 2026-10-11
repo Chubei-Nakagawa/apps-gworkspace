@@ -61,19 +61,6 @@
 	"Finder" = "Dateisuche";
 	"Applications..." = "Anwendungen...";
 	"File Operations..." = "Dateioperationen...";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Fiend anzeigen";
-		"Hide Fiend" = "Fiend ausblenden";
-		"Add Layer..." = "Schicht hinzufügen...";
-		"Remove Current Layer" = "Aktuelle Schicht entfernen";
-		"Rename Current Layer" = "Aktuelle Schicht umbenennen";
-		"Layers" = "Schichten";
-	"Tabbed Shelf" = "Fach";
-		"Show Tabbed Shelf" = "Fach anzeigen";
-		"Hide Tabbed Shelf" = "Fach ausblenden";
-		"Remove Current Tab" = "Aktuelle Lasche entfernen";
-		"Rename Current Tab" = "Aktuelle Lascheumbenennen";
-		"Add Tab..." = "Lasche hinzufügen...";
 	"Terminal" = "Terminal";
 	"Show Desktop" = "Arbeitsfläche anzeigen";
 	"Hide Desktop" = "Arbeitsfläche ausblenden";
@@ -323,20 +310,6 @@ which ends in "kann <the file> nicht umbenennen"
 "includes"="enthält";
 
 
-/* ----------------------- Fiend strings --------------------------- */
-
-/* Fiend.m */
-
-"New Layer" = "Neue Schicht";
-"A layer with this name is already present!" = "Eine Schicht mit diesem Namen existiert bereits!";
-"You can't remove the last layer!" = "Sie können die letzte Schicht nicht entfernen!";
-"Remove layer" = "Schicht entfernen";
-"Are you sure that you want to remove this layer?" = "Sie sind sicher, dass Sie diese Schicht entfernen wollen?";
-"Rename Layer" = "Schicht umbenennen";
-"You can't dock multiple paths!" = "Sie können keine mehrfachen Pfade andocken!";
-"This object is already present in this layer!" = "Dieses Objekt existiert bereits in dieser Schicht!";
-	
-			
 /* ----------------------- Preferences strings --------------------------- */
 
 /* PreferencesWin.m */

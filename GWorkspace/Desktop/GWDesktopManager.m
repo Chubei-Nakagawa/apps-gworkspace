@@ -32,7 +32,6 @@
 #import "FSNFunctions.h"
 #import "GWorkspace.h"
 #import "GWViewersManager.h"
-#import "TShelf/TShelfWin.h"
 #import "Thumbnailer/GWThumbnailer.h"
 
 #define RESV_MARGIN 10
@@ -364,9 +363,6 @@ static GWDesktopManager *desktopManager = nil;
   if (dockPosition == DockPositionRight) {
     dockReservedFrame.origin.x = screenFrame.size.width - 64 - RESV_MARGIN;
   }
-  
-  tshelfReservedFrame = NSMakeRect(0, 0, screenFrame.size.width, 106 + RESV_MARGIN);
-  tshelfActivateFrame = NSMakeRect(0, 0, screenFrame.size.width, 20);
 }
 
 - (NSRect)macmenuReservedFrame
@@ -377,31 +373,6 @@ static GWDesktopManager *desktopManager = nil;
 - (NSRect)dockReservedFrame
 {
   return dockReservedFrame;
-}
-
-- (NSRect)tshelfReservedFrame
-{
-  return tshelfReservedFrame;
-}
-
-- (NSRect)tshelfActivateFrame
-{
-  return tshelfActivateFrame;
-}
-
-- (NSImage *)tabbedShelfBackground
-{
-  return [desktopView tshelfBackground];
-}
-
-- (void)mouseEnteredTShelfActivateFrame
-{
-  [[gworkspace tabbedShelf] animateShowing];
-}
-
-- (void)mouseExitedTShelfActiveFrame
-{
-  [[gworkspace tabbedShelf] animateHiding];
 }
 
 - (void)deselectAllIcons

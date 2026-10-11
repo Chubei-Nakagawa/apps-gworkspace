@@ -38,14 +38,6 @@
 		"Permissions" = "Permissões";	
 	"Finder" = "Buscador";
 	"Processes..." = "Processos...";
-	"Fiend" = "Fiend";
-		"Show Fiend" = "Mostrar Fiend"; /* R// Arrumar esto */
-		"Hide Fiend" = "Ocultar Fiend";
-		"Add Layer..." = "Adicionar Camada...";
-		"Remove Current Layer" = "Remover Camada Atual";
-		"Rename Current Layer" = "Renomear Camada Atual";
-		"Layers" = "Camadas";
-	"DeskTop Shelf" = "DeskTop Shelf";	
 	"XTerm" = "XTerm";
 	
 "Windows" = "Janelas";
@@ -226,31 +218,6 @@
 "Background" = "Segundo Plano"; /* R// revisar */
 
 
-/* ----------------------- Finder strings --------------------------- */
-
-/* Finder.m */
-
-"Finder" = "Buscador";
-"Find items with names that match" = "Buscar ítens com nomes que combinem";
-"Find items with contents that match" = "Buscar ítens com conteúdo que combine";
-"No selection!" = "Não há nenhuma seleção!";
-"No arguments!" = "Não há argumentos!";
-
-
-/* ----------------------- Fiend strings --------------------------- *\
-
-/* Fiend.m */
-
-"New Layer" = "Nova Camada";
-"A layer with this name is already present!" = "Já há uma camada com este nome!";
-"You can't remove the last layer!" = "Não é possível remover a última camada!";
-"Remove layer" = "Remover camada";
-"Are you sure that you want to remove this layer?" = "Você tem certeza de que deseja remover esta camada?";
-"Rename Layer" = "Renomear camada";
-"You can't dock multiple paths!" = "Não é possível agrupar múltiplos caminhos!";
-"This object is already present in this layer!" = "Este objeto já está nesta camada!";
-	
-			
 /* ----------------------- Preference strings --------------------------- */
 
 /* PreferencesWin.m */
