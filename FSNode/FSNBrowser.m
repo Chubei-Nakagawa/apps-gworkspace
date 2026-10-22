@@ -1717,10 +1717,7 @@
   }
 
   if ([operation isEqual: NSWorkspaceMoveOperation]
-        || [operation isEqual: NSWorkspaceDestroyOperation]
-				|| [operation isEqual: NSWorkspaceRecycleOperation]
-				|| [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-				|| [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"]) {
+        || [operation isEqual: NSWorkspaceDestroyOperation]) {
     if ([self isShowingPath: source]) {
       [self reloadFromColumnWithPath: source]; 
     }
@@ -2285,11 +2282,6 @@
     if ([ednode isParentWritable] == NO)
       {
 	showAlertNoPermission([FSNode class], [ednode parentName]);
-	CLEAREDITING;
-      }
-    else if ([ednode isSubnodeOfPath: [desktopApp trashPath]])
-      {
-	showAlertInRecycler([FSNode class]);
 	CLEAREDITING;
       }
     else

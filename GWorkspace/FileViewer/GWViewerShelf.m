@@ -890,10 +890,7 @@
 
   if ([operation isEqual: NSWorkspaceMoveOperation] 
       || [operation isEqual: NSWorkspaceDestroyOperation]
-      || [operation isEqual: @"GWorkspaceRenameOperation"]
-      || [operation isEqual: NSWorkspaceRecycleOperation]
-      || [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-      || [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"])
+      || [operation isEqual: @"GWorkspaceRenameOperation"])
     {
       NSMutableArray *oppaths = [NSMutableArray array];
       NSUInteger count = [icons count];

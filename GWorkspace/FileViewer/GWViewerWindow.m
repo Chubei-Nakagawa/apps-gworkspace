@@ -147,11 +147,6 @@
   [[self delegate] selectAllInViewer];
 }
 
-- (void)showTerminal:(id)sender
-{
-  [[self delegate] showTerminal];
-}
-
 - (void)keyDown:(NSEvent *)theEvent 
 {
   unsigned flags = [theEvent modifierFlags];
@@ -192,11 +187,6 @@
     }
 	
   [super keyDown: theEvent];
-}
-
-- (void)print:(id)sender
-{
-	[super print: sender];
 }
 
 @end

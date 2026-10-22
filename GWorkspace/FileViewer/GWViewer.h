@@ -176,7 +176,6 @@ typedef enum
 - (void)chooseLabelColor:(id)sender;
 - (void)chooseBackColor:(id)sender;
 - (void)selectAllInViewer;
-- (void)showTerminal;
 - (BOOL)validateItem:(id)menuItem;
 - (void)makeThumbnails:(id)sender;
 - (void)removeThumbnails:(id)sender;

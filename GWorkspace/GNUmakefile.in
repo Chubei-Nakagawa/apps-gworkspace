@@ -1,7 +1,7 @@
 
 PACKAGE_NEEDS_CONFIGURE = YES
 
-PACKAGE_NAME = gworkspace
+PACKAGE_NAME = gfinder
 include $(GNUSTEP_MAKEFILES)/common.make
 
 VERSION = @PACKAGE_VERSION@
@@ -15,11 +15,11 @@ SUBPROJECTS = Finder/Modules \
 #
 # MAIN APP
 #
-APP_NAME = GWorkspace
-GWorkspace_PRINCIPAL_CLASS = GWorkspace
-GWorkspace_APPLICATION_ICON=FileManager.tiff
+APP_NAME = GFinder
+GFinder_PRINCIPAL_CLASS = GFinder
+GFinder_APPLICATION_ICON=FileManager.tiff
 
-GWorkspace_HAS_RESOURCE_BUNDLE = yes
+GFinder_HAS_RESOURCE_BUNDLE = yes
 
 #
 # Additional libraries
@@ -28,7 +28,7 @@ ADDITIONAL_GUI_LIBS += -lFSNode
 ADDITIONAL_GUI_LIBS += -lInspector
 ADDITIONAL_GUI_LIBS += -lOperation
 
-GWorkspace_RESOURCE_FILES = \
+GFinder_RESOURCE_FILES = \
   Resources/Icons/* \
   Resources/English.lproj \
   Resources/BrasilPortuguese.lproj \
@@ -46,7 +46,7 @@ GWorkspace_RESOURCE_FILES = \
   Resources/Polish.lproj \
   GWorkspaceInfo.plist
 
-GWorkspace_LANGUAGES = \
+GFinder_LANGUAGES = \
   Resources/English \
   Resources/BrasilPortuguese \
   Resources/Dutch \
@@ -63,16 +63,10 @@ GWorkspace_LANGUAGES = \
   Resources/Polish
 
 # The Objective-C source files to be compiled
-GWorkspace_OBJC_FILES = main.m \
+GFinder_OBJC_FILES = main.m \
 GWFunctions.m \
 GWorkspace.m \
 WorkspaceApplication.m \
-Desktop/GWDesktopManager.m \
-Desktop/GWDesktopWindow.m \
-Desktop/GWDesktopView.m \
-Desktop/GWDesktopIcon.m \
-Desktop/Dock/Dock.m \
-Desktop/Dock/DockIcon.m \
 FileViewer/GWViewersManager.m \
 FileViewer/GWViewer.m \
 FileViewer/GWViewerWindow.m \
@@ -94,14 +88,12 @@ Finder/LiveSearch/LSFolder.m \
 Finder/LiveSearch/LSFEditor.m \
 Preferences/PrefController.m \
 Preferences/DefEditorPref.m \
-Preferences/XTermPref.m \
 Preferences/DefSortOrderPref.m \
 Preferences/IconsPref.m \
 Preferences/HiddenFilesPref.m \
 Preferences/HistoryPref.m \
 Preferences/BrowserViewerPref.m \
 Preferences/OperationPrefs.m \
-Preferences/DesktopPref.m \
 History/History.m \
 Dialogs/Dialogs.m \
 Dialogs/ExecuteController.m \

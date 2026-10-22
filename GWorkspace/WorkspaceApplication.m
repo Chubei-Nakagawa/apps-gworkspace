@@ -33,8 +33,6 @@
 #import "FSNodeRep.h"
 #import "FSNFunctions.h"
 #import "GWorkspace.h"
-#import "GWDesktopManager.h"
-#import "Dock.h"
 #import "GWViewersManager.h"
 #import "Operation.h"
 #import "StartAppWin.h"
@@ -113,27 +111,6 @@
   }
    
   return NO;
-}
-
-- (int)extendPowerOffBy:(int)requested
-{
-  int req = (int)(requested / 1000);
-  int ret;
-  
-  if (req > 0) {
-    ret = (req < maxLogoutDelay) ? req : maxLogoutDelay;
-  } else {
-    ret = 0;
-  }
-  
-  logoutDelay += ret;
-
-  if (logoutTimer && [logoutTimer isValid]) {
-    NSTimeInterval fireInterval = ([[logoutTimer fireDate] timeIntervalSinceNow] + ret);
-    [logoutTimer setFireDate: [NSDate dateWithTimeIntervalSinceNow: fireInterval]];
-  }
-  
-  return (ret * 1000);
 }
 
 - (NSArray *)launchedApplications
@@ -355,27 +332,8 @@
 
 - (void)initializeWorkspace
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-  autoLogoutDelay = [defaults integerForKey: @"GSAutoLogoutDelay"];
-  
-  if (autoLogoutDelay == 0) {
-    autoLogoutDelay = 120;
-  }
-
-  maxLogoutDelay = [defaults integerForKey: @"GSMaxLogoutDelay"];
-  
-  if (autoLogoutDelay == 0) {
-    maxLogoutDelay = 30;
-  }  
-
   wsnc = [ws notificationCenter];
   
-  [wsnc addObserver: self
-	         selector: @selector(appWillLaunch:)
-		           name: NSWorkspaceWillLaunchApplicationNotification
-		         object: nil];
-
   [wsnc addObserver: self
 	         selector: @selector(appDidLaunch:)
 		           name: NSWorkspaceDidLaunchApplicationNotification
@@ -408,8 +366,6 @@
     
   [self checkLastRunningApps];
 
-  logoutTimer = nil;
-  logoutDelay = 0;
   loggingout = NO;
 }
 
@@ -503,20 +459,6 @@
   return NO;    
 }
 
-- (void)appWillLaunch:(NSNotification *)notif
-{
-  NSDictionary *info = [notif userInfo];
-  NSString *path = [info objectForKey: @"NSApplicationPath"];
-  NSString *name = [info objectForKey: @"NSApplicationName"];
-  
-  if (path && name) {
-    [[dtopManager dock] appWillLaunch: path appName: name];
-    GWDebugLog(@"appWillLaunch: \"%@\" %@", name, path);
-  } else {
-    GWDebugLog(@"appWillLaunch: unknown application!");
-  }
-}
-
 - (void)appDidLaunch:(NSNotification *)notif
 {
   NSDictionary *info = [notif userInfo];
@@ -540,11 +482,6 @@
     if (app && [app application]) {
       [launchedApps addObject: app];
     }  
-  }
-
-  if (app && [app application]) {
-    [[dtopManager dock] appDidLaunch: path appName: name];
-    GWDebugLog(@"\"%@\" appDidLaunch (%@)", name, path);
   }
 }
 
@@ -621,7 +558,6 @@
    
   if (app) {
     [app setHidden: YES];
-    [[dtopManager dock] appDidHide: name];
   } else {
     GWDebugLog(@"appDidHide: \"%@\" unknown running application.", name);
   }
@@ -636,8 +572,6 @@
     
   if (app) {
     [app setHidden: NO];
-    [[dtopManager dock] appDidUnhide: name];
-    GWDebugLog(@"\"%@\" appDidUnhide", name);
   } else {
     GWDebugLog(@"appDidUnhide: \"%@\" unknown running application.", name);
   }
@@ -660,7 +594,6 @@
     activeApplication = nil;
   }
   
-  [[dtopManager dock] appTerminated: [app name]];
   GWDebugLog(@"\"%@\" applicationTerminated", [app name]);  
   [launchedApps removeObject: app];  
   
@@ -873,12 +806,6 @@
           
                   [launchedApps addObject: app];
                   [app setHidden: hidden];
-                  [[dtopManager dock] appDidLaunch: path appName: name];
-          
-                  if (hidden)
-                    {
-                      [[dtopManager dock] appDidHide: name];
-                    }
           
                 }
               else if (app != nil)
@@ -892,75 +819,6 @@
         {
           [self updateStoredAppInfoWithLaunchedApps: toremove];
         }
-    }
-}
-
-- (void)startLogout
-{
-  NSString *msg = [NSString stringWithFormat: @"%@\n%@%i %@",
-        NSLocalizedString(@"Are you sure you want to quit\nall applications and log out now?", @""),
-        NSLocalizedString(@"If you do nothing, the system will log out\nautomatically in ", @""),
-        autoLogoutDelay,
-        NSLocalizedString(@"seconds.", @"")];
-  
-  loggingout = YES;
-  logoutDelay = 30;
-  
-  if (logoutTimer && [logoutTimer isValid])
-    [logoutTimer invalidate];
-
-  ASSIGN (logoutTimer, [NSTimer scheduledTimerWithTimeInterval: autoLogoutDelay
-                                                        target: self 
-                                                      selector: @selector(doLogout:) 
-                                                      userInfo: nil 
-                                                       repeats: NO]);
-  /* we will display a modal panel, so we add the timer to the modal runloop */
-  [[NSRunLoop currentRunLoop] addTimer: logoutTimer forMode: NSModalPanelRunLoopMode];
-                                        
-  if (NSRunAlertPanel(NSLocalizedString(@"Logout", @""),
-                      msg,
-                      NSLocalizedString(@"Log out", @""),
-                      NSLocalizedString(@"Cancel", @""),
-                      nil))
-    {
-      [logoutTimer invalidate]; 
-      [self doLogout: nil];
-    }
-  else
-    {
-      [logoutTimer invalidate]; 
-      DESTROY (logoutTimer);
-      loggingout = NO;
-    }
-}
-
-- (void)doLogout:(id)sender
-{
-  NSMutableArray *launched = [NSMutableArray array];
-  GWLaunchedApp *gwapp = [self launchedAppWithPath: gwBundlePath andName: gwProcessName];
-  NSUInteger i;
-  
-  [launched addObjectsFromArray: launchedApps];
-  [launched removeObject: gwapp];
-  
-  for (i = 0; i < [launched count]; i++)
-    [[launched objectAtIndex: i] terminateApplication];
-  
-  [launched removeAllObjects];
-  [launched addObjectsFromArray: launchedApps];
-  [launched removeObject: gwapp];
-    
-  if ([launched count])
-    {
-      ASSIGN (logoutTimer, [NSTimer scheduledTimerWithTimeInterval: logoutDelay
-                                                            target: self 
-                                                          selector: @selector(terminateTasks:) 
-                                                          userInfo: nil 
-                                                           repeats: NO]);
-    }
-  else
-    {
-      [NSApp terminate: self];
     }
 }
 

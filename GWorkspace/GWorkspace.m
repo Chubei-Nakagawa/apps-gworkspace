@@ -46,8 +46,6 @@
 #import "RunExternalController.h"
 #import "StartAppWin.h"
 #import "Preferences/PrefController.h"
-#import "GWDesktopManager.h"
-#import "Dock.h"
 #import "GWViewersManager.h"
 #import "GWViewer.h"
 #import "Finder.h"
@@ -57,7 +55,6 @@
 
 
 static NSString *defaulteditor = @"nedit.app";
-static NSString *defaultxterm = @"xterm";
 
 static GWorkspace *gworkspace = nil;
 
@@ -116,18 +113,11 @@ static GWorkspace *gworkspace = nil;
   [[NSDistributedNotificationCenter defaultCenter] removeObserver: self];
   [wsnc removeObserver: self];
   [[NSNotificationCenter defaultCenter] removeObserver: self];
-  if (logoutTimer && [logoutTimer isValid]) {
-    [logoutTimer invalidate];
-    DESTROY (logoutTimer);
-  }
-  DESTROY (recyclerApp);
   DESTROY (ddbd);
   DESTROY (mdextractor);
   RELEASE (gwProcessName);
   RELEASE (gwBundlePath);
   RELEASE (defEditor);
-  RELEASE (defXterm);
-  RELEASE (defXtermArgs);
   RELEASE (selectedPaths);
   RELEASE (trashContents);
   RELEASE (trashPath);
@@ -137,7 +127,6 @@ static GWorkspace *gworkspace = nil;
   RELEASE (runExtController);
   RELEASE (startAppWin);
   RELEASE (vwrsManager);
-  RELEASE (dtopManager);
   DESTROY (inspector);
   DESTROY (fileOpsManager);
   RELEASE (finder);
@@ -175,9 +164,7 @@ static GWorkspace *gworkspace = nil;
   [menu addItemWithTitle:_(@"New Folder") action:@selector(newFolder:) keyEquivalent:@"n"];
   [menu addItemWithTitle:_(@"New File")  action:@selector(newFile:) keyEquivalent:@"N"];
   [menu addItemWithTitle:_(@"Duplicate")  action:@selector(duplicateFiles:) keyEquivalent:@"u"];
-  [menu addItemWithTitle:_(@"Destroy")  action:@selector(deleteFiles:) keyEquivalent:@"r"];  
-  [menu addItemWithTitle:_(@"Move to Recycler")  action:@selector(recycleFiles:) keyEquivalent:@"d"];
-  [menu addItemWithTitle:_(@"Empty Recycler") action:@selector(emptyRecycler:) keyEquivalent:@""];
+  [menu addItemWithTitle:_(@"Destroy")  action:@selector(deleteFiles:) keyEquivalent:@"r"];
   
   // Edit
   menuItem = [mainMenu addItemWithTitle:_(@"Edit") action:NULL keyEquivalent:@""];
@@ -266,7 +253,6 @@ static GWorkspace *gworkspace = nil;
 
   [menu addItemWithTitle:_(@"Finder") action:@selector(showFinder:) keyEquivalent:@"f"];
 
-  [menu addItemWithTitle:_(@"Terminal") action:@selector(showTerminal:) keyEquivalent:@"t"];
   [menu addItemWithTitle:_(@"Run...") action:@selector(runCommand:) keyEquivalent:@""];  
 
   menuItem = [menu addItemWithTitle:_(@"History") action:NULL keyEquivalent:@""];
@@ -275,11 +261,6 @@ static GWorkspace *gworkspace = nil;
   [subMenu addItemWithTitle:_(@"Show History") action:@selector(showHistory:) keyEquivalent:@""];
   [subMenu addItemWithTitle:_(@"Go backward") action:@selector(goBackwardInHistory:) keyEquivalent:@""];
   [subMenu addItemWithTitle:_(@"Go forward") action:@selector(goForwardInHistory:) keyEquivalent:@""];
-  
-  [menu addItemWithTitle:_(@"Show Desktop") action:@selector(showDesktop:) keyEquivalent:@""];
-  [menu addItemWithTitle:_(@"Show Recycler") action:@selector(showRecycler:) keyEquivalent:@""];
-
-  [menu addItemWithTitle:_(@"Check for disks") action:@selector(checkRemovableMedia:) keyEquivalent:@"E"];
 	
   // Windows
   menuItem = [mainMenu addItemWithTitle:_(@"Windows") action:NULL keyEquivalent:@""];
@@ -299,14 +280,8 @@ static GWorkspace *gworkspace = nil;
   [mainMenu addItemWithTitle:_(@"Hide Others") action:@selector(hideOtherApplications:)  keyEquivalent:@"H"];
   [mainMenu addItemWithTitle:_(@"Show All") action:@selector(unhideAllApplications:) keyEquivalent:@""];
 
-  // Print
-  [mainMenu addItemWithTitle:_(@"Print...") action:@selector(print:) keyEquivalent:@"p"];
-	
   // Quit
   [mainMenu addItemWithTitle:_(@"Quit") action:@selector(terminate:) keyEquivalent:@"Q"];
-
-  // Logout
-  [mainMenu addItemWithTitle:_(@"Logout") action:@selector(logout:) keyEquivalent:@""];
 
   [mainMenu update];
 
@@ -372,20 +347,6 @@ static GWorkspace *gworkspace = nil;
       ASSIGN (defEditor, entry);
     }
 
-	entry = [defaults stringForKey: @"defxterm"];
-	if (entry == nil) {
-		defXterm = [[NSString alloc] initWithString: defaultxterm];
-	} else {
-		ASSIGN (defXterm, entry);
-  }
-
-	entry = [defaults stringForKey: @"defaultxtermargs"];
-	if (entry == nil) {
-		defXtermArgs = nil;
-	} else {
-		ASSIGN (defXtermArgs, entry);
-  }
-  
   teminalService = [defaults boolForKey: @"terminal_services"];
   [self setUseTerminalService: teminalService];
   		
@@ -429,31 +390,6 @@ static GWorkspace *gworkspace = nil;
   fswnotifications = YES;
   [self connectFSWatcher];
     
-  recyclerApp = nil;
-
-  dtopManager = [GWDesktopManager desktopManager];
-    
-  if ([defaults boolForKey: @"no_desktop"] == NO)
-  { 
-    id item;
-   
-    [dtopManager activateDesktop];
-    menu = [[[NSApp mainMenu] itemWithTitle: NSLocalizedString(@"Tools", @"")] submenu];
-    item = [menu itemWithTitle: NSLocalizedString(@"Show Desktop", @"")];
-    [item setTitle: NSLocalizedString(@"Hide Desktop", @"")];
-
-  } else if ([defaults boolForKey: @"uses_recycler"])
-  { 
-    [self connectRecycler];
-  }  
-
-  tshelfPBFileNum = 0;
-  [self createTabbedShelf];
-  if ([defaults boolForKey: @"tshelf"])
-    [self showTShelf: nil];
-  else
-    [self hideTShelf: nil];
-
   prefController = [PrefController new];  
   
   history = [[History alloc] init];
@@ -591,11 +527,6 @@ static GWorkspace *gworkspace = nil;
       }
   }
 
-  if (logoutTimer && [logoutTimer isValid]) {
-    [logoutTimer invalidate];
-    DESTROY (logoutTimer);
-  }
-  
   [wsnc removeObserver: self];
   
   fswnotifications = NO;
@@ -628,22 +559,6 @@ static GWorkspace *gworkspace = nil;
   [inspector updateDefaults];
 
   [finder stopAllSearchs];
-  
-  if (recyclerApp)
-    {
-      NSConnection *conn;
-
-      conn = [(NSDistantObject *)recyclerApp connectionForProxy];
-  
-      if (conn && [conn isValid])
-        {
-          [nc removeObserver: self
-                        name: NSConnectionDidDieNotification
-                      object: conn];
-          [recyclerApp terminateApplication];
-          DESTROY (recyclerApp);
-        }
-    }
   
   if (ddbd)
     {
@@ -679,34 +594,14 @@ static GWorkspace *gworkspace = nil;
   return defEditor;
 }
 
-- (NSString *)defXterm
-{
-  return defXterm;
-}
-
-- (NSString *)defXtermArgs
-{
-  return defXtermArgs;
-}
-
 - (GWViewersManager *)viewersManager
 {
   return vwrsManager;
 }
 
-- (GWDesktopManager *)desktopManager
-{
-  return dtopManager;
-}
-
 - (History *)historyWindow
 {
   return history;
-}
-
-- (id)rootViewer
-{
-  return nil;
 }
 
 - (void)showRootViewer
@@ -770,18 +665,6 @@ static GWorkspace *gworkspace = nil;
   }
 }
 
-- (void)changeDefaultXTerm:(NSString *)xterm 
-                 arguments:(NSString *)args
-{
-  ASSIGN (defXterm, xterm);
-  
-  if ([args length]) {
-    ASSIGN (defXtermArgs, args);
-  } else {
-    DESTROY (defXtermArgs);
-  }
-}
-
 - (void)setUseTerminalService:(BOOL)value
 {
   teminalService = value;
@@ -812,17 +695,9 @@ static GWorkspace *gworkspace = nil;
 
   [vwrsManager updateDefaults];
 
-  [dtopManager updateDefaults];
-  [defaults setBool: ![dtopManager isActive] forKey: @"no_desktop"];
-
   [finder updateDefaults];
 
   [defaults setObject: defEditor forKey: @"defaulteditor"];
-  [defaults setObject: defXterm forKey: @"defxterm"];
-  if (defXtermArgs != nil)
-    {
-      [defaults setObject: defXtermArgs forKey: @"defaultxtermargs"];
-    }
 
   [defaults setBool: teminalService forKey: @"terminal_services"];
 	
@@ -833,8 +708,6 @@ static GWorkspace *gworkspace = nil;
   [defaults setObject: entry forKey: @"history_cache"];
 
   [defaults setBool: [[inspector win] isVisible] forKey: @"uses_inspector"];
-
-  [defaults setBool: (recyclerApp != nil) forKey: @"uses_recycler"];
 
 	[defaults synchronize];
 }
@@ -896,34 +769,6 @@ static GWorkspace *gworkspace = nil;
   return nil;
 }
 
-- (void)startXTermOnDirectory:(NSString *)dirPath
-{
-  if (teminalService) {
-    NSPasteboard *pboard = [NSPasteboard pasteboardWithUniqueName];
-    NSArray *types = [NSArray arrayWithObject: NSFilenamesPboardType];
-
-    [pboard declareTypes: types owner: self];
-    [pboard setPropertyList: [NSArray arrayWithObject: dirPath]
-									  forType: NSFilenamesPboardType];
-                    
-    NSPerformService(@"Terminal/Open shell here", pboard);  
-                      
-  } else {  
-	  NSTask *task = [NSTask new];
-
-	  AUTORELEASE (task);
-	  [task setCurrentDirectoryPath: dirPath];			
-	  [task setLaunchPath: defXterm];
-
-    if (defXtermArgs) {
-	    NSArray *args = [defXtermArgs componentsSeparatedByString: @" "];
-	    [task setArguments: args];
-    }
-
-	  [task launch];
-  }
-}
-
 - (int)defaultSortType
 {
   return [fsnodeRep defaultSortOrder];
@@ -943,22 +788,8 @@ static GWorkspace *gworkspace = nil;
 {	
   SEL action = [anItem action];
 
-  if (sel_isEqual(action, @selector(showRecycler:))) {
-    return (([dtopManager isActive] == NO) || ([dtopManager dockActive] == NO));
-  
-  } else if (sel_isEqual(action, @selector(emptyRecycler:))) {
-    return ([trashContents count] != 0);
-  } else if (sel_isEqual(action, @selector(removeTShelfTab:))
-              || sel_isEqual(action, @selector(renameTShelfTab:))
-                      || sel_isEqual(action, @selector(addTShelfTab:))) {
-    return [tshelfWin isVisible];
-
-  } else if (sel_isEqual(action, @selector(activateContextHelp:))) {
+  if (sel_isEqual(action, @selector(activateContextHelp:))) {
     return ([NSHelpManager isContextHelpModeActive] == NO);
-
-  } else if (sel_isEqual(action, @selector(logout:))) {
-    return !loggingout;
-    
   }
   
   return YES;
@@ -1404,7 +1235,6 @@ static GWorkspace *gworkspace = nil;
   [fsnodeRep setUseThumbnails: value];
   
   [vwrsManager thumbnailsDidChangeInPaths: nil];
-  [dtopManager thumbnailsDidChangeInPaths: nil];
 }
 
 - (void)thumbnailsDidChange:(NSNotification *)notif
@@ -1436,7 +1266,6 @@ static GWorkspace *gworkspace = nil;
       }
 
       [vwrsManager thumbnailsDidChangeInPaths: tmbdirs];
-      [dtopManager thumbnailsDidChangeInPaths: tmbdirs];
       [tmbdirs removeAllObjects];
     }
 
@@ -1462,7 +1291,6 @@ static GWorkspace *gworkspace = nil;
       }
       
       [vwrsManager thumbnailsDidChangeInPaths: tmbdirs];
-      [dtopManager thumbnailsDidChangeInPaths: tmbdirs];
       
     }
 }
@@ -1474,7 +1302,6 @@ static GWorkspace *gworkspace = nil;
   removables = [[[NSUserDefaults standardUserDefaults] persistentDomainForName: NSGlobalDomain] objectForKey: @"GSRemovableMediaPaths"];
 
   [fsnodeRep setVolumes: removables];
-  [dtopManager removableMediaPathsDidChange];
 }
 
 - (void)reservedMountNamesDidChange:(NSNotification *)notif
@@ -1489,13 +1316,11 @@ static GWorkspace *gworkspace = nil;
   
   [fsnodeRep setHideSysFiles: hide];
   [vwrsManager hideDotsFileDidChange: hide];
-  [dtopManager hideDotsFileDidChange: hide];
 }
 
 - (void)hiddenFilesDidChange:(NSArray *)paths
 {
   [vwrsManager hiddenFilesDidChange: paths];
-  [dtopManager hiddenFilesDidChange: paths];
 }
 
 - (void)customDirectoryIconDidChange:(NSNotification *)notif
@@ -1514,7 +1339,6 @@ static GWorkspace *gworkspace = nil;
   paths = [NSArray arrayWithObject: dirpath];
   
   [vwrsManager thumbnailsDidChangeInPaths: paths];
-  [dtopManager thumbnailsDidChangeInPaths: paths];
 
 }
 
@@ -1674,99 +1498,6 @@ static GWorkspace *gworkspace = nil;
 
 - (oneway void)globalWatchedPathDidChange:(NSDictionary *)dirinfo
 {
-}
-
-- (void)connectRecycler
-{
-  if (recyclerApp == nil)
-    {
-      recyclerApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"Recycler" 
-                                                                      host: @""];
-      
-      if (recyclerApp == nil)
-        {
-          unsigned i;
-          
-          [startAppWin showWindowWithTitle: @"GWorkspace"
-                                   appName: @"Recycler"
-                                 operation: NSLocalizedString(@"starting:", @"")
-                              maxProgValue: 80.0];
-          
-          [ws launchApplication: @"Recycler"];
-          
-          for (i = 1; i <= 80; i++)
-            {
-              [startAppWin updateProgressBy: 1.0];
-              [[NSRunLoop currentRunLoop] runUntilDate:
-                                            [NSDate dateWithTimeIntervalSinceNow: 0.1]];
-              recyclerApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"Recycler" 
-                                                                              host: @""];                  
-              if (recyclerApp)
-                {
-                  [startAppWin updateProgressBy: 80.0 - (double)i];
-                  break;
-                }
-            }
-
-          [[startAppWin win] close];
-        }
-    
-      if (recyclerApp)
-        {
-          NSMenu *menu = [[[NSApp mainMenu] itemWithTitle: NSLocalizedString(@"Tools", @"")] submenu];
-          id item = [menu itemWithTitle: NSLocalizedString(@"Show Recycler", @"")];
-
-          if (item != nil) {
-            [item setTitle: NSLocalizedString(@"Hide Recycler", @"")];
-          }
-    
-          RETAIN (recyclerApp);
-          [recyclerApp setProtocolForProxy: @protocol(RecyclerAppProtocol)];
-    
-          [[NSNotificationCenter defaultCenter] addObserver: self
-                                                   selector: @selector(recyclerConnectionDidDie:)
-                                                       name: NSConnectionDidDieNotification
-                                                     object: [recyclerApp connectionForProxy]];
-        } 
-      else
-        {
-          NSRunAlertPanel(nil,
-                          NSLocalizedString(@"unable to contact Recycler!", @""),
-                          NSLocalizedString(@"Ok", @""),
-                          nil, 
-                          nil);  
-        }
-    }
-}
-
-- (void)recyclerConnectionDidDie:(NSNotification *)notif
-{
-  id connection = [notif object];
-  NSMenu *menu = [[[NSApp mainMenu] itemWithTitle: NSLocalizedString(@"Tools", @"")] submenu];
-  id item = [menu itemWithTitle: NSLocalizedString(@"Hide Recycler", @"")];
-
-  [[NSNotificationCenter defaultCenter] removeObserver: self
-	                    name: NSConnectionDidDieNotification
-	                  object: connection];
-
-  NSAssert(connection == [recyclerApp connectionForProxy],
-		                                  NSInternalInconsistencyException);
-  RELEASE (recyclerApp);
-  recyclerApp = nil;
-
-  if (item != nil) {
-    [item setTitle: NSLocalizedString(@"Show Recycler", @"")];
-  }
-    
-  if (recyclerCanQuit == NO) {  
-    if (NSRunAlertPanel(nil,
-                      NSLocalizedString(@"The Recycler connection died.\nDo you want to restart it?", @""),
-                      NSLocalizedString(@"Yes", @""),
-                      NSLocalizedString(@"No", @""),
-                      nil)) {
-      [self connectRecycler]; 
-    }    
-  }
 }
 
 - (void)connectDDBd
@@ -2033,11 +1764,6 @@ static GWorkspace *gworkspace = nil;
 //
 // Menu Operations
 //
-- (void)logout:(id)sender
-{
-  [self startLogout];
-}
-
 - (void)showInfo:(id)sender
 {
   
@@ -2096,52 +1822,6 @@ static GWorkspace *gworkspace = nil;
   [inspector showAnnotations];
 }
 
-- (void)showDesktop:(id)sender
-{
-  NSMenu *menu = [[[NSApp mainMenu] itemWithTitle: NSLocalizedString(@"Tools", @"")] submenu];
-  id item;
-
-  if ([dtopManager isActive] == NO)
-    {
-      [dtopManager activateDesktop];
-      item = [menu itemWithTitle: NSLocalizedString(@"Show Desktop", @"")];
-      [item setTitle: NSLocalizedString(@"Hide Desktop", @"")];
-      if (recyclerApp)
-	{
-	  recyclerCanQuit = YES;
-	  [recyclerApp terminateApplication];
-	  item = [menu itemWithTitle: NSLocalizedString(@"Hide Recycler", @"")];
-	  [item setTitle: NSLocalizedString(@"Show Recycler", @"")];
-	}
-    }
-  else {
-    [dtopManager deactivateDesktop];
-    item = [menu itemWithTitle: NSLocalizedString(@"Hide Desktop", @"")];
-    [item setTitle: NSLocalizedString(@"Show Desktop", @"")];
-  }
-}
-
-- (void)showRecycler:(id)sender
-{
-  NSMenu *menu = [[[NSApp mainMenu] itemWithTitle: NSLocalizedString(@"Tools", @"")] submenu];
-  id item;
-
-  if (recyclerApp == nil)
-    {
-      recyclerCanQuit = NO; 
-      [self connectRecycler];
-      item = [menu itemWithTitle: NSLocalizedString(@"Show Recycler", @"")];
-      [item setTitle: NSLocalizedString(@"Hide Recycler", @"")];
-    }
-  else
-    {
-      recyclerCanQuit = YES;
-      [recyclerApp terminateApplication];
-      item = [menu itemWithTitle: NSLocalizedString(@"Hide Recycler", @"")];
-      [item setTitle: NSLocalizedString(@"Show Recycler", @"")];
-    }
-}
-
 - (void)showFinder:(id)sender
 {
   [finder activate];   
@@ -2153,22 +1833,13 @@ static GWorkspace *gworkspace = nil;
 
   if (kwin)
     {
-      if ([vwrsManager hasViewerWithWindow: kwin]
-                                  || [dtopManager hasWindow: kwin])
+      if ([vwrsManager hasViewerWithWindow: kwin])
 	{
 	  id nodeView;
 	  NSArray *selection;
 	  NSArray *basesel;
 
-	  if ([vwrsManager hasViewerWithWindow: kwin])
-	    {
-	      nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
-	    }
-	  else
-	    {
-	      nodeView = [dtopManager desktopView];
-	    }
-
+    nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
 	  selection = [nodeView selectedPaths];
 	  basesel = [NSArray arrayWithObject: [[nodeView baseNode] path]];
 
@@ -2193,18 +1864,12 @@ static GWorkspace *gworkspace = nil;
   NSWindow *kwin = [NSApp keyWindow];
 
   if (kwin) {
-    if ([vwrsManager hasViewerWithWindow: kwin]
-                                  || [dtopManager hasWindow: kwin]) {
+    if ([vwrsManager hasViewerWithWindow: kwin]) {
       id nodeView;
       NSArray *selection;
       NSArray *basesel;
       
-      if ([vwrsManager hasViewerWithWindow: kwin]) {
-        nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
-      } else {
-        nodeView = [dtopManager desktopView];
-      }
-    
+      nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
       selection = [nodeView selectedPaths];  
       basesel = [NSArray arrayWithObject: [[nodeView baseNode] path]];
       
@@ -2227,8 +1892,7 @@ static GWorkspace *gworkspace = nil;
   NSWindow *kwin = [NSApp keyWindow];
 
   if (kwin) {
-    if ([vwrsManager hasViewerWithWindow: kwin]
-                                  || [dtopManager hasWindow: kwin]) {
+    if ([vwrsManager hasViewerWithWindow: kwin]) {
       NSPasteboard *pb = [NSPasteboard generalPasteboard];
 
       if ([[pb types] containsObject: NSFilenamesPboardType]) {
@@ -2237,12 +1901,7 @@ static GWorkspace *gworkspace = nil;
         if (sourcePaths) {
           BOOL cut = [fileOpsManager filenamesWasCut];
           id nodeView;
-
-          if ([vwrsManager hasViewerWithWindow: kwin]) {
-            nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
-          } else {
-            nodeView = [dtopManager desktopView];
-          }
+          nodeView = [[vwrsManager viewerWithWindow: kwin] nodeView];
 
           if ([nodeView validatePasteOfFilenames: sourcePaths
                                        wasCut: cut]) {
@@ -2284,53 +1943,6 @@ static GWorkspace *gworkspace = nil;
 - (void)runCommand:(id)sender
 {
   [runExtController activate];
-}
-
-- (void)checkRemovableMedia:(id)sender
-{
-  [dtopManager checkNewRemovableMedia];	
-}
-
-- (void)emptyRecycler:(id)sender
-{
-  CREATE_AUTORELEASE_POOL(arp);
-  FSNode *node = [FSNode nodeWithPath: trashPath];
-  NSMutableArray *subNodes = [[node subNodes] mutableCopy];
-  int count = [subNodes count];
-  NSUInteger i;  
-  
-  for (i = 0; i < count; i++)
-    {
-      FSNode *nd = [subNodes objectAtIndex: i];
-
-      if ([nd isReserved])
-	{
-	  [subNodes removeObjectAtIndex: i];
-	  i--;
-	  count --;
-	}
-    }
-  
-  if ([subNodes count])
-    {
-      NSMutableArray *files = [NSMutableArray array];
-      NSMutableDictionary *opinfo = [NSMutableDictionary dictionary];
-
-      for (i = 0; i < [subNodes count]; i++)
-	{
-	  [files addObject: [[(FSNode *)[subNodes objectAtIndex: i] path] lastPathComponent]];
-	}
-
-      [opinfo setObject: @"GWorkspaceEmptyRecyclerOperation" forKey: @"operation"];
-      [opinfo setObject: trashPath forKey: @"source"];
-      [opinfo setObject: trashPath forKey: @"destination"];
-      [opinfo setObject: files forKey: @"files"];
-
-      [self performFileOperation: opinfo];
-    }
-
-  RELEASE (subNodes);
-  RELEASE (arp);
 }
 
 

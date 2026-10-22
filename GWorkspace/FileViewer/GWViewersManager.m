@@ -29,7 +29,6 @@
 #import "History.h"
 #import "FSNFunctions.h"
 #import "GWorkspace.h"
-#import "GWDesktopManager.h"
 
 
 static GWViewersManager *vwrsmanager = nil;
@@ -763,15 +762,6 @@ static GWViewersManager *vwrsmanager = nil;
 - (BOOL)orderingViewers
 {
   return orderingViewers;
-}
-
-- (void)updateDesktop
-{
-  id desktopManager = [gworkspace desktopManager];  
-
-  if ([desktopManager isActive]) {
-    [desktopManager deselectAllIcons];
-  }
 }
 
 - (void)updateDefaults

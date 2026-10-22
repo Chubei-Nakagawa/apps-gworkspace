@@ -15,41 +15,6 @@
 	);
 	Super = NSView;
     };
-    DesktopPref = {
-	Actions = (
-	    "setColor:",
-	    "chooseImage:",
-	    "setImage:",
-	    "setImageStyle:",
-	    "setUseImage:",
-	    "setOmnipresent:",
-	    "setUsesDock:",
-	    "setDockPosition:",
-	    "setDockStyle:",
-	    "setSingleClickLaunch:"
-	);
-	Outlets = (
-	    win,
-	    prefbox,
-	    tabView,
-	    colorLabel,
-	    colorWell,
-	    imageView,
-	    imagePosMatrix,
-	    chooseImageButt,
-	    useImageSwitch,
-	    omnipresentCheck,
-	    launchSingleClick,
-	    dockBox,
-	    useDockCheck,
-	    dockPosLabel,
-	    dockPosMatrix,
-	    dockStyleLabel,
-	    dockStyleMatrix,
-	    gworkspace
-	);
-	Super = NSObject;
-    };
     FirstResponder = {
 	Actions = (
 	    "chooseImage:",

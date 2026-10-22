@@ -28,13 +28,11 @@
 
 #import "PrefController.h"
 #import "DefEditorPref.h"
-#import "XTermPref.h"
 #import "DefSortOrderPref.h"
 #import "IconsPref.h"
 #import "HiddenFilesPref.h"
 #import "HistoryPref.h"
 #import "BrowserViewerPref.h"
-#import "DesktopPref.h"
 #import "OperationPrefs.h"
 #import "GWorkspace.h"
 
@@ -83,12 +81,10 @@ RELEASE (currentPref)
   }
 
   ADD_PREF_VIEW ([DefEditorPref class]);
-  ADD_PREF_VIEW ([XTermPref class]);
   ADD_PREF_VIEW ([BrowserViewerPref class]);
   ADD_PREF_VIEW ([DefSortOrderPref class]);		
   ADD_PREF_VIEW ([IconsPref class]);
   ADD_PREF_VIEW ([HiddenFilesPref class]);
-  ADD_PREF_VIEW ([DesktopPref class]);
   ADD_PREF_VIEW ([OperationPrefs class]);
   ADD_PREF_VIEW ([HistoryPref class]);
 

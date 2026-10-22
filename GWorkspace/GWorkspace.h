@@ -30,7 +30,6 @@
 #import <AppKit/NSWorkspace.h>
 
 #define NOEDIT 0
-#define NOXTERM 1
 
 /* defines the maximum number of files to open before issuing a dialog */
 #define MAX_FILES_TO_OPEN_DIALOG 8
@@ -40,7 +39,6 @@
 @class FSNode;
 @class FSNodeRep;
 @class GWViewersManager;
-@class GWDesktopManager;
 @class Finder;
 @class Inspector;
 @class Operation;
@@ -73,13 +71,6 @@
 
 - (oneway void)client:(id <FSWClientProtocol>)client
                           removeWatcherForPath:(NSString *)path;
-
-@end
-
-
-@protocol	RecyclerAppProtocol
-
-- (oneway void)emptyTrash:(id)sender;
 
 @end
 
@@ -121,10 +112,7 @@
   id fswatcher;
   BOOL fswnotifications;
   NSCountedSet *watchedPaths;
-  
-  id recyclerApp;
-  BOOL recyclerCanQuit;
-  
+
   id ddbd;
   id mdextractor;
   
@@ -134,7 +122,6 @@
   int maxHistoryCache;
     
   GWViewersManager *vwrsManager;
-  GWDesktopManager *dtopManager;  
   Inspector *inspector;
   Finder *finder;
   Operation *fileOpsManager;
@@ -150,8 +137,6 @@
   NSString *gwProcessName;  	      
   NSString *gwBundlePath;  	      
   NSString *defEditor;
-  NSString *defXterm;
-  NSString *defXtermArgs;
   BOOL teminalService;
           
   NSFileManager *fm;
@@ -168,11 +153,7 @@
   NSString *storedAppinfoPath;
   NSDistributedLock *storedAppinfoLock;
   
-  NSTimer *logoutTimer;
   BOOL loggingout;
-  int autoLogoutDelay;
-  int maxLogoutDelay;  
-  int logoutDelay;
 }
 
 + (GWorkspace *)gworkspace;
@@ -183,17 +164,9 @@
 
 - (NSString *)defEditor;
 
-- (NSString *)defXterm;
-
-- (NSString *)defXtermArgs;
-
 - (GWViewersManager *)viewersManager;
 
-- (GWDesktopManager *)desktopManager;
-
 - (History *)historyWindow;
-
-- (id)rootViewer;
 
 - (void)showRootViewer;
 
@@ -203,9 +176,6 @@
 
 - (void)changeDefaultEditor:(NSNotification *)notif;
 
-- (void)changeDefaultXTerm:(NSString *)xterm 
-                 arguments:(NSString *)args;
-             
 - (void)setUseTerminalService:(BOOL)value;             
 
 - (NSString *)gworkspaceProcessName;
@@ -216,8 +186,6 @@
 
 - (NSAttributedString *)contextHelpFromName:(NSString *)fileName;
 					 
-- (void)startXTermOnDirectory:(NSString *)dirPath;
-
 - (int)defaultSortType;
 
 - (void)setDefaultSortType:(int)type;
@@ -285,10 +253,6 @@
 
 - (void)fswatcherConnectionDidDie:(NSNotification *)notif;
 
-- (void)connectRecycler;
-
-- (void)recyclerConnectionDidDie:(NSNotification *)notif;
-
 - (void)connectDDBd;
 
 - (void)ddbdConnectionDidDie:(NSNotification *)notif;
@@ -333,8 +297,6 @@
 - (void)closeMainWin:(id)sender;
 #endif
 
-- (void)logout:(id)sender;
-
 - (void)showInfo:(id)sender;
 
 - (void)showPreferences:(id)sender;
@@ -353,17 +315,9 @@
 
 - (void)showAnnotationsInspector:(id)sender;
 
-- (void)showDesktop:(id)sender;
-
-- (void)showRecycler:(id)sender;
-
 - (void)showFinder:(id)sender;
 
 - (void)runCommand:(id)sender;
-
-- (void)checkRemovableMedia:(id)sender;
-
-- (void)emptyRecycler:(id)sender;
 
 
 //
@@ -418,8 +372,6 @@
 - (BOOL)selectFile:(NSString *)fullPath
 							inFileViewerRootedAtPath:(NSString *)rootFullpath;
 
-- (int)extendPowerOffBy:(int)requested;
-
 - (NSArray *)launchedApplications;
 
 - (NSDictionary *)activeApplication;
@@ -447,8 +399,6 @@
 
 - (BOOL)launchApplication:(NSString *)appname
 		            arguments:(NSArray *)args;
-
-- (void)appWillLaunch:(NSNotification *)notif;
 
 - (void)appDidLaunch:(NSNotification *)notif;
 
@@ -478,10 +428,6 @@
 - (void)updateStoredAppInfoWithLaunchedApps:(NSArray *)apps;
 
 - (void)checkLastRunningApps;
-
-- (void)startLogout;
-
-- (void)doLogout:(id)sender;
 
 - (void)terminateTasks:(id)sender;
 

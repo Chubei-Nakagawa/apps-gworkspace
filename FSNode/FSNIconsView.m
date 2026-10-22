@@ -65,13 +65,6 @@ if (rct.size.height < 0) rct.size.height = 0; \
 [o setFrame: NSIntegralRect(rct)]; \
 }
 
-/* we redefine the dockstyle to read the preferences without including Dock.h" */
-typedef enum DockStyle
-{
-  DockStyleClassic = 0,
-  DockStyleModern = 1
-} DockStyle;
-
 static void GWHighlightFrameRect(NSRect aRect)
 {
   NSFrameRectWithWidthUsingOperation(aRect, 1.0, GSCompositeHighlight);
@@ -117,12 +110,6 @@ static void GWHighlightFrameRect(NSRect aRect)
 	  SEL sel = NSSelectorFromString(selName);
 	  desktopApp = [desktopAppClass performSelector: sel];
 	}
-
-      /* we tie the transparent selection to the modern dock style */
-      transparentSelection = NO;
-      defentry = [defaults objectForKey: @"dockstyle"];
-      if ([defentry intValue] == DockStyleModern)
-	transparentSelection = YES;
 
       ASSIGN (backColor, [NSColor windowBackgroundColor]);
       ASSIGN (textColor, [NSColor controlTextColor]);
@@ -585,8 +572,7 @@ static void GWHighlightFrameRect(NSRect aRect)
       r = NSMakeRect(x, y, w, h);
 
       // Erase the previous rect
-      if (transparentSelection
-	  || (!transparentSelection && scrolled))
+      if (scrolled)
 	{
 	  [self setNeedsDisplayInRect: oldRect];
 	  [[self window] displayIfNeeded];
@@ -595,18 +581,6 @@ static void GWHighlightFrameRect(NSRect aRect)
       // Draw the new rect
       [self lockFocus];
 
-      if (transparentSelection)
-	{
-	  [[NSColor darkGrayColor] set];
-	  NSFrameRect(r);
-	  if (transparentSelection)
-	    {
-	      [[[NSColor darkGrayColor] colorWithAlphaComponent: 0.33] set];
-	      NSRectFillUsingOperation(r, NSCompositeSourceOver);
-	    }
-	}
-      else
-	{
 	  if (!NSEqualRects(oldRect, r) && !scrolled)
 	    {
 	      GWHighlightFrameRect(oldRect);
@@ -616,7 +590,6 @@ static void GWHighlightFrameRect(NSRect aRect)
 	    {
 	      GWHighlightFrameRect(r);
 	    }
-	}
 
       [self unlockFocus];
 
@@ -2466,11 +2439,6 @@ static void GWHighlightFrameRect(NSRect aRect)
   if ([ednode isParentWritable] == NO)
     {
       showAlertNoPermission([FSNode class], [ednode parentName]);
-      CLEAREDITING;
-    }
-  else if ([ednode isSubnodeOfPath: [desktopApp trashPath]])
-    {
-      showAlertInRecycler([FSNode class]);
       CLEAREDITING;
     }
   else

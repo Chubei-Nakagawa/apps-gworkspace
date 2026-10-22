@@ -105,8 +105,6 @@
 
 - (BOOL)orderingViewers;
 
-- (void)updateDesktop;
-
 - (void)updateDefaults;
 
 @end

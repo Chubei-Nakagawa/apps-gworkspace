@@ -149,14 +149,6 @@ void showAlertNoPermission(Class c, NSString *name)
                   nil, nil);   
 }
 
-void showAlertInRecycler(Class c)
-{
-  NSRunAlertPanel(NSLocalizedStringFromTableInBundle(@"Error", nil, [NSBundle bundleForClass:c], @""),
-                  NSLocalizedStringFromTableInBundle(@"You can't rename an object that is in the Recycler", nil, [NSBundle bundleForClass:c], @""),
-                  NSLocalizedStringFromTableInBundle(@"Continue", nil, [NSBundle bundleForClass:c], @"")
-                  , nil, nil);   
-}
-
 void showAlertInvalidName(Class c)
 {
   NSLog(@"Class %@ Bundle %@", c, [NSBundle bundleForClass:c]);

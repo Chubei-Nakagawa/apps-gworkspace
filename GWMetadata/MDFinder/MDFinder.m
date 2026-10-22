@@ -111,9 +111,6 @@ static MDFinder *mdfinder = nil;
   // Hide
   addItemToMenu(mainMenu, @"Hide", @"", @"hide:", @"h");
   
-  // Print
-  addItemToMenu(mainMenu, @"Print...", @"", @"print:", @"p");
-  
   // Quit
   addItemToMenu(mainMenu, @"Quit", @"", @"terminate:", @"q");
   

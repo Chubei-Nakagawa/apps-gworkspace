@@ -787,13 +787,6 @@
       [self updateNameEditor];
       return;
     }
-  if ([ednode isSubnodeOfPath: [[GWorkspace gworkspace] trashPath]])
-    {
-      showAlertInRecycler([FSNode class]);
-      [self updateNameEditor];
-      return;
-    } 
-  else
     {
       NSString *newname = [nameEditor stringValue];
       NSString *newpath = [[ednode parentPath] stringByAppendingPathComponent: newname];

@@ -899,10 +899,7 @@
   if ([self isSubnodeOfPath: source]) {
     if ([operation isEqual: NSWorkspaceMoveOperation]
         || [operation isEqual: NSWorkspaceDestroyOperation]
-        || [operation isEqual: @"GWorkspaceRenameOperation"]
-			  || [operation isEqual: NSWorkspaceRecycleOperation]
-			  || [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-			  || [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"]) { 
+        || [operation isEqual: @"GWorkspaceRenameOperation"]) { 
       for (i = 0; i < [files count]; i++) {
         NSString *fname = [files objectAtIndex: i];
         NSString *fpath = [source stringByAppendingPathComponent: fname];
@@ -917,9 +914,7 @@
   if ([self isSubnodeOfPath: destination]) {
     if ([operation isEqual: NSWorkspaceMoveOperation]
           || [operation isEqual: NSWorkspaceCopyOperation]
-          || [operation isEqual: NSWorkspaceLinkOperation]
-	|| [operation isEqual: NSWorkspaceRecycleOperation]
-	|| [operation isEqual: @"GWorkspaceRecycleOutOperation"]) { 
+          || [operation isEqual: NSWorkspaceLinkOperation]) { 
       for (i = 0; i < [files count]; i++) {
         NSString *fname = [files objectAtIndex: i];
         NSString *fpath = [destination stringByAppendingPathComponent: fname];

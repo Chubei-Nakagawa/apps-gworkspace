@@ -1586,11 +1586,6 @@ shouldEditTableColumn:(NSTableColumn *)aTableColumn
       showAlertNoPermission([FSNode class], [ednode parentName]);
       CLEAREDITING;
     }
-  else if ([ednode isSubnodeOfPath: [desktopApp trashPath]])
-    {
-      showAlertInRecycler([FSNode class]);
-      CLEAREDITING;
-    }
   else
     {
       NSString *newname = [nameEditor stringValue];

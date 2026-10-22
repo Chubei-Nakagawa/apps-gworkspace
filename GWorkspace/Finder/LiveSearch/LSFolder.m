@@ -873,10 +873,7 @@ shouldMakeNewConnection:(NSConnection*)newConn
   }	
   
   if ([operation isEqual: NSWorkspaceMoveOperation] 
-        || [operation isEqual: NSWorkspaceDestroyOperation]
-      || [operation isEqual: NSWorkspaceRecycleOperation]
-      || [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-      || [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"])
+        || [operation isEqual: NSWorkspaceDestroyOperation])
     {
     for (i = 0; i < [files count]; i++) {
       NSString *fname = [files objectAtIndex: i];

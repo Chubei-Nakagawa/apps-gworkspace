@@ -738,10 +738,7 @@
     }
 
     if ([operation isEqual: NSWorkspaceMoveOperation]
-          || [operation isEqual: NSWorkspaceDestroyOperation]
-				  || [operation isEqual: NSWorkspaceRecycleOperation]
-				  || [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-				  || [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"]) {
+          || [operation isEqual: NSWorkspaceDestroyOperation]) {
       [nodeView reloadFromNode: [FSNode nodeWithPath: source]];
     }
     
@@ -964,7 +961,6 @@ constrainMinCoordinate:(CGFloat)proposedMin
 {
   NSArray *selection = [nodeView selectedNodes];
 
-  [manager updateDesktop];
   if ([selection count] == 0)
     {
       selection = [NSArray arrayWithObject: [nodeView shownNode]];
@@ -993,7 +989,6 @@ constrainMinCoordinate:(CGFloat)proposedMin
 
 - (BOOL)windowShouldClose:(id)sender
 {
-  [manager updateDesktop];
 	return YES;
 }
 
@@ -1017,7 +1012,7 @@ constrainMinCoordinate:(CGFloat)proposedMin
 
 - (void)openSelectionInNewViewer:(BOOL)newv
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
+  {
     NSArray *selection = [nodeView selectedNodes]; 
     NSUInteger count = (selection ? [selection count] : 0);
     
@@ -1084,72 +1079,34 @@ constrainMinCoordinate:(CGFloat)proposedMin
       [manager openAsFolderSelectionInViewer: self];
     }
   
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't open a document that is in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
   }
 }
 
 - (void)openSelectionAsFolder
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
-    [manager openAsFolderSelectionInViewer: self];
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't do this in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
-  }
+  [manager openAsFolderSelectionInViewer: self];
 }
 
 - (void)openSelectionWith
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
-    [manager openWithSelectionInViewer: self];
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't do this in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
-  }
+  [manager openWithSelectionInViewer: self];
 }
 
 - (void)newFolder
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
-    [gworkspace newObjectAtPath: [[nodeView shownNode] path] 
-                    isDirectory: YES];
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't create a new folder in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
-  }
+  [gworkspace newObjectAtPath: [[nodeView shownNode] path] 
+                  isDirectory: YES];
 }
 
 - (void)newFile
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
-    [gworkspace newObjectAtPath: [[nodeView shownNode] path] 
-                    isDirectory: NO];
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't create a new file in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
-  }
+  [gworkspace newObjectAtPath: [[nodeView shownNode] path] 
+                  isDirectory: NO];
 }
 
 - (void)duplicateFiles
 {
-  if ([[baseNode path] isEqual: [gworkspace trashPath]] == NO) {
+  {
     NSArray *selection = [nodeView selectedNodes];
 
     if (selection && [selection count]) {
@@ -1159,12 +1116,6 @@ constrainMinCoordinate:(CGFloat)proposedMin
         [gworkspace duplicateFiles];
       }
     }
-  } else {
-    NSRunAlertPanel(nil, 
-                  NSLocalizedString(@"You can't duplicate files in the Recycler!", @""),
-					        NSLocalizedString(@"OK", @""), 
-                  nil, 
-                  nil);  
   }
 }
 
@@ -1181,11 +1132,6 @@ constrainMinCoordinate:(CGFloat)proposedMin
       }
     }
   }
-}
-
-- (void)emptyTrash
-{
-  [gworkspace emptyRecycler: nil];
 }
 
 - (void)deleteFiles
@@ -1423,47 +1369,6 @@ constrainMinCoordinate:(CGFloat)proposedMin
 - (void)selectAllInViewer
 {
   [nodeView selectAll];
-}
-
-- (void)showTerminal
-{
-  NSString *path;
-
-  if ([nodeView isSingleNode])
-    {
-      path = [[nodeView shownNode] path];
-    }
-  else
-    {
-      NSArray *selection = [nodeView selectedNodes];
-
-      if (selection)
-	{
-	  FSNode *node = [selection objectAtIndex: 0];
-
-	  if ([selection count] > 1)
-	    {
-	      path = [node parentPath];
-	    }
-	  else
-	    {
-	      if ([node isDirectory] && ([node isPackage] == NO))
-		{
-		  path = [node path];
-		}
-	      else
-		{
-		  path = [node parentPath];
-		}
-	    }
-	}
-      else
-	{
-	  path = [[nodeView shownNode] path];
-	}
-    }
-
-  [gworkspace startXTermOnDirectory: path];
 }
 
 - (BOOL)validateItem:(id)menuItem

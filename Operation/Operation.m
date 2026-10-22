@@ -124,8 +124,7 @@
       || [operation isEqual: @"GWorkspaceRecycleOutOperation"])
     {    
       action = MOVE;
-    } else if ([operation isEqual: NSWorkspaceDestroyOperation] 
-	       || [operation isEqual: @"GWorkspaceEmptyRecyclerOperation"])
+    } else if ([operation isEqual: NSWorkspaceDestroyOperation])
     {
       action = DESTROY;
     } else if ([operation isEqual: NSWorkspaceCopyOperation] 
@@ -317,8 +316,7 @@
     }
   }
 
-  if ([optype isEqual: NSWorkspaceDestroyOperation]
-            || [optype isEqual: @"GWorkspaceEmptyRecyclerOperation"]) {
+  if ([optype isEqual: NSWorkspaceDestroyOperation]) {
     //             
     // destination
     //
