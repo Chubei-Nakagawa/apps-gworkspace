@@ -598,7 +598,7 @@ static NSString *nibName = @"FileOperationWin";
               msg = @"Some items have the same name;\ndo you want to replace them?";
               title = @"Recycle";
             }
-          else if ([type isEqual: @"GWorkspaceRecycleOutOperation"])
+          else if ([type isEqual: @"GFinderRecycleOutOperation"])
             {
               msg = @"Some items have the same name;\ndo you want to replace them?";
               title = @"Recycle";
@@ -820,10 +820,10 @@ shouldMakeNewConnection:(NSConnection*)newConn
 
   samename = NO;
 
-  if (([operation isEqual: @"GWorkspaceRenameOperation"])
-        || ([operation isEqual: @"GWorkspaceCreateDirOperation"])
-        || ([operation isEqual: @"GWorkspaceCreateFileOperation"])) {
-    /* already checked by GWorkspace */
+  if (([operation isEqual: @"GFinderRenameOperation"])
+        || ([operation isEqual: @"GFinderCreateDirOperation"])
+        || ([operation isEqual: @"GFinderCreateFileOperation"])) {
+    /* already checked by GFinder */
 	  return NO;
   }
   
@@ -848,7 +848,7 @@ shouldMakeNewConnection:(NSConnection*)newConn
       if (([operation isEqual: NSWorkspaceMoveOperation]) 
           || ([operation isEqual: NSWorkspaceCopyOperation])
           || ([operation isEqual: NSWorkspaceLinkOperation])
-          || ([operation isEqual: @"GWorkspaceRecycleOutOperation"]))
+          || ([operation isEqual: @"GFinderRecycleOutOperation"]))
         {
           return YES;
         }
@@ -955,7 +955,7 @@ shouldMakeNewConnection:(NSConnection*)newConn
   canupdate = YES; 
 
   if ([operation isEqual: NSWorkspaceMoveOperation]
-      || [operation isEqual: @"GWorkspaceRecycleOutOperation"])
+      || [operation isEqual: @"GFinderRecycleOutOperation"])
     {
       [self doMove];
     }
@@ -979,15 +979,15 @@ shouldMakeNewConnection:(NSConnection*)newConn
     {
       [self doTrash];
     }
-  else if ([operation isEqual: @"GWorkspaceRenameOperation"])
+  else if ([operation isEqual: @"GFinderRenameOperation"])
     {
       [self doRename];
     }
-  else if ([operation isEqual: @"GWorkspaceCreateDirOperation"])
+  else if ([operation isEqual: @"GFinderCreateDirOperation"])
     {
       [self doNewFolder];
     }
-  else if ([operation isEqual: @"GWorkspaceCreateFileOperation"])
+  else if ([operation isEqual: @"GFinderCreateFileOperation"])
     {
       [self doNewFile];
     }

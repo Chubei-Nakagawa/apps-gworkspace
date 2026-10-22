@@ -1212,7 +1212,7 @@ static void GWHighlightFrameRect(NSRect aRect)
   NSString *ndpath = [node path];
   NSUInteger i;
 
-  if ([operation isEqual: @"GWorkspaceRenameOperation"])
+  if ([operation isEqual: @"GFinderRenameOperation"])
     {
       files = [NSArray arrayWithObject: [source lastPathComponent]];
       source = [source stringByDeletingLastPathComponent];
@@ -1228,9 +1228,9 @@ static void GWHighlightFrameRect(NSRect aRect)
     {
       if ([operation isEqual: NSWorkspaceMoveOperation]
 	  || [operation isEqual: NSWorkspaceDestroyOperation]
-	  || [operation isEqual: @"GWorkspaceRenameOperation"]
+	  || [operation isEqual: @"GFinderRenameOperation"]
 	  || [operation isEqual: NSWorkspaceRecycleOperation]
-	  || [operation isEqual: @"GWorkspaceRecycleOutOperation"]) {
+	  || [operation isEqual: @"GFinderRecycleOutOperation"]) {
 
 	if ([operation isEqual: NSWorkspaceRecycleOperation]) {
 	  files = [info objectForKey: @"origfiles"];
@@ -1245,7 +1245,7 @@ static void GWHighlightFrameRect(NSRect aRect)
       }
     }
 
-  if ([operation isEqual: @"GWorkspaceRenameOperation"])
+  if ([operation isEqual: @"GFinderRenameOperation"])
     {
       files = [NSArray arrayWithObject: [destination lastPathComponent]];
       destination = [destination stringByDeletingLastPathComponent];
@@ -1256,11 +1256,11 @@ static void GWHighlightFrameRect(NSRect aRect)
 	  || [operation isEqual: NSWorkspaceCopyOperation]
 	  || [operation isEqual: NSWorkspaceLinkOperation]
 	  || [operation isEqual: NSWorkspaceDuplicateOperation]
-	  || [operation isEqual: @"GWorkspaceCreateDirOperation"]
-	  || [operation isEqual: @"GWorkspaceCreateFileOperation"]
+	  || [operation isEqual: @"GFinderCreateDirOperation"]
+	  || [operation isEqual: @"GFinderCreateFileOperation"]
 	  || [operation isEqual: NSWorkspaceRecycleOperation]
-	  || [operation isEqual: @"GWorkspaceRenameOperation"]
-	  || [operation isEqual: @"GWorkspaceRecycleOutOperation"]))
+	  || [operation isEqual: @"GFinderRenameOperation"]
+	  || [operation isEqual: @"GFinderRecycleOutOperation"]))
     {
       if ([operation isEqual: NSWorkspaceRecycleOperation])
 	{
@@ -2209,7 +2209,7 @@ static void GWHighlightFrameRect(NSRect aRect)
 
   if ([source isEqual: trashPath])
     {
-      operation = @"GWorkspaceRecycleOutOperation";
+      operation = @"GFinderRecycleOutOperation";
     }
   else
     {
@@ -2479,7 +2479,7 @@ static void GWHighlightFrameRect(NSRect aRect)
 	    }
 	}
 
-      [opinfo setObject: @"GWorkspaceRenameOperation" forKey: @"operation"];
+      [opinfo setObject: @"GFinderRenameOperation" forKey: @"operation"];
       [opinfo setObject: [ednode path] forKey: @"source"];
       [opinfo setObject: newpath forKey: @"destination"];
       [opinfo setObject: [NSArray arrayWithObject: @""] forKey: @"files"];

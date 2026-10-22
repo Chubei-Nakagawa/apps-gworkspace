@@ -1658,7 +1658,7 @@
 {
   NSString *operation = [info objectForKey: @"operation"];
   
-  if ([operation isEqual: @"GWorkspaceRenameOperation"] == NO) {
+  if ([operation isEqual: @"GFinderRenameOperation"] == NO) {
     [self checkLockedReps];
   }
 }
@@ -1670,7 +1670,7 @@
   NSString *destination = [info objectForKey: @"destination"];
   NSArray *files = [info objectForKey: @"files"];
   
-  if ([operation isEqual: @"GWorkspaceRenameOperation"]) {
+  if ([operation isEqual: @"GFinderRenameOperation"]) {
     files = [NSArray arrayWithObject: [destination lastPathComponent]];
     destination = [destination stringByDeletingLastPathComponent]; 
   }
@@ -1683,11 +1683,11 @@
         || [operation isEqual: NSWorkspaceCopyOperation]
         || [operation isEqual: NSWorkspaceLinkOperation]
         || [operation isEqual: NSWorkspaceDuplicateOperation]
-        || [operation isEqual: @"GWorkspaceCreateDirOperation"]
-        || [operation isEqual: @"GWorkspaceCreateFileOperation"]
+        || [operation isEqual: @"GFinderCreateDirOperation"]
+        || [operation isEqual: @"GFinderCreateFileOperation"]
         || [operation isEqual: NSWorkspaceRecycleOperation]
-        || [operation isEqual: @"GWorkspaceRenameOperation"]
-			  || [operation isEqual: @"GWorkspaceRecycleOutOperation"]) { 
+        || [operation isEqual: @"GFinderRenameOperation"]
+			  || [operation isEqual: @"GFinderRecycleOutOperation"]) { 
     FSNBrowserColumn *bc = [self columnWithPath: destination];        
    
     if (bc) {
@@ -1696,11 +1696,11 @@
       if ([[self window] isKeyWindow]) {
         BOOL selectCell = NO;
       
-        if ([operation isEqual: @"GWorkspaceCreateFileOperation"]
-                || [operation isEqual: @"GWorkspaceCreateDirOperation"]) {  
+        if ([operation isEqual: @"GFinderCreateFileOperation"]
+                || [operation isEqual: @"GFinderCreateDirOperation"]) {  
           selectCell = YES;
           
-        } else if ([operation isEqual: @"GWorkspaceRenameOperation"]) { 
+        } else if ([operation isEqual: @"GFinderRenameOperation"]) { 
           NSString *newname = [files objectAtIndex: 0];
           NSString *newpath = [destination stringByAppendingPathComponent: newname];
           
@@ -2321,7 +2321,7 @@
 	  }
       }
 
-      [opinfo setObject: @"GWorkspaceRenameOperation" forKey: @"operation"];	
+      [opinfo setObject: @"GFinderRenameOperation" forKey: @"operation"];	
       [opinfo setObject: [ednode path] forKey: @"source"];	
       [opinfo setObject: newpath forKey: @"destination"];	
       [opinfo setObject: [NSArray arrayWithObject: @""] forKey: @"files"];	

@@ -35,7 +35,7 @@ int main(int argc, char** argv, char **env_c)
   NSString *fpath = nil;
   NSString *fullPath = nil;
   BOOL isDir = NO;
-  id gworkspace = nil;
+  id gfinder = nil;
    
   pool = [NSAutoreleasePool new];
   fm = [NSFileManager defaultManager];
@@ -62,17 +62,17 @@ int main(int argc, char** argv, char **env_c)
       }
     }    
 
-	  gworkspace = [NSConnection rootProxyForConnectionWithRegisteredName: @"GWorkspace"  
+	  gfinder = [NSConnection rootProxyForConnectionWithRegisteredName: @"GFinder"  
 								          host: @""];
       
-    if (gworkspace == nil)
+    if (gfinder == nil)
       {
-	NSLog(@"can't contact GWorkspace via %@. exiting now.", fpath);
+	NSLog(@"can't contact GFinder via %@. exiting now.", fpath);
 	[pool release];
 	exit(0);
       } 
     
-    [gworkspace application: gworkspace openFile: fullPath];    
+    [gfinder application: gfinder openFile: fullPath];    
   }
   
   [pool release];

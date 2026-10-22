@@ -285,7 +285,7 @@ BOOL subPathOfPath(NSString *p1, NSString *p2);
     }
 
   bundlesDir = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];
-  bundlesDir = [bundlesDir stringByAppendingPathComponent: @"GWorkspace"];
+  bundlesDir = [bundlesDir stringByAppendingPathComponent: @"GFinder"];
 
   if ([fm fileExistsAtPath: bundlesDir isDirectory: &isdir] && isdir) {
     [bundlesPaths addObjectsFromArray: [self bundlesWithExtension: @"finder" 

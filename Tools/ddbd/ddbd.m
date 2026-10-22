@@ -407,7 +407,7 @@ static BOOL	auto_stop = NO;		/* Should we shut down when unused? */
   if ([operation isEqual: NSWorkspaceMoveOperation] 
                 || [operation isEqual: NSWorkspaceCopyOperation]
                 || [operation isEqual: NSWorkspaceDuplicateOperation]
-                || [operation isEqual: @"GWorkspaceRenameOperation"]) {
+                || [operation isEqual: @"GFinderRenameOperation"]) {
     CREATE_AUTORELEASE_POOL(arp);
     NSString *source = [updinfo objectForKey: @"source"];
     NSString *destination = [updinfo objectForKey: @"destination"];
@@ -417,7 +417,7 @@ static BOOL	auto_stop = NO;		/* Should we shut down when unused? */
     NSMutableArray *dstpaths = [NSMutableArray array];
     NSUInteger i;
     
-    if ([operation isEqual: @"GWorkspaceRenameOperation"]) {
+    if ([operation isEqual: @"GFinderRenameOperation"]) {
       srcpaths = [NSMutableArray arrayWithObject: source];
       dstpaths = [NSMutableArray arrayWithObject: destination];
     } else {

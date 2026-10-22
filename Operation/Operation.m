@@ -89,9 +89,9 @@
 
   opfiles = files;
 
-  if ([operation isEqual: @"GWorkspaceRenameOperation"]
-      || [operation isEqual: @"GWorkspaceCreateDirOperation"]
-      || [operation isEqual: @"GWorkspaceCreateFileOperation"])
+  if ([operation isEqual: @"GFinderRenameOperation"]
+      || [operation isEqual: @"GFinderCreateDirOperation"]
+      || [operation isEqual: @"GFinderCreateFileOperation"])
     {    
       confirm = NO;
       usewin = NO;
@@ -103,7 +103,7 @@
       || [operation isEqual: NSWorkspaceDuplicateOperation]
       || [operation isEqual: NSWorkspaceRecycleOperation]
       || [operation isEqual: NSWorkspaceDestroyOperation] 
-      || [operation isEqual: @"GWorkspaceRecycleOutOperation"])
+      || [operation isEqual: @"GFinderRecycleOutOperation"])
     {
       opbase = source;
     }
@@ -112,7 +112,7 @@
       opbase = destination;
     }
 
-  if ([operation isEqual: @"GWorkspaceRenameOperation"])
+  if ([operation isEqual: @"GFinderRenameOperation"])
     {
       opfiles = [NSArray arrayWithObject: [source lastPathComponent]];
       opbase = [source stringByDeletingLastPathComponent];
@@ -121,7 +121,7 @@
   action = MOVE;
   if ([operation isEqual: NSWorkspaceMoveOperation]
       || [operation isEqual: NSWorkspaceRecycleOperation]
-      || [operation isEqual: @"GWorkspaceRecycleOutOperation"])
+      || [operation isEqual: @"GFinderRecycleOutOperation"])
     {    
       action = MOVE;
     } else if ([operation isEqual: NSWorkspaceDestroyOperation])
@@ -132,11 +132,11 @@
 	       || [operation isEqual: NSWorkspaceDuplicateOperation]) 
     {
       action = COPY;
-    } else if ([operation isEqual: @"GWorkspaceRenameOperation"])
+    } else if ([operation isEqual: @"GFinderRenameOperation"])
     {
       action = RENAME;
-    } else if ([operation isEqual: @"GWorkspaceCreateDirOperation"] 
-	       || [operation isEqual: @"GWorkspaceCreateFileOperation"])
+    } else if ([operation isEqual: @"GFinderCreateDirOperation"] 
+	       || [operation isEqual: @"GFinderCreateFileOperation"])
     {
       action = CREATE;
     }
@@ -257,7 +257,7 @@
 
   if ([optype isEqual: NSWorkspaceMoveOperation]
                     || [optype isEqual: NSWorkspaceRecycleOperation]
-                    || [optype isEqual: @"GWorkspaceRecycleOutOperation"]) {
+                    || [optype isEqual: @"GFinderRecycleOutOperation"]) {
     //
     // source
     //
@@ -411,8 +411,8 @@
   BOOL valid;
   BOOL isDir;
   
-  if (operation && ([operation isEqual: @"GWorkspaceCreateDirOperation"]
-                  || [operation isEqual: @"GWorkspaceCreateFileOperation"]))
+  if (operation && ([operation isEqual: @"GFinderCreateDirOperation"]
+                  || [operation isEqual: @"GFinderCreateFileOperation"]))
     {    
       chpath = [path stringByDeletingLastPathComponent];
     }
@@ -456,8 +456,8 @@
       if ([operation isEqual: NSWorkspaceMoveOperation]
           || [operation isEqual: NSWorkspaceRecycleOperation]
           || [operation isEqual: NSWorkspaceDestroyOperation] 
-          || [operation isEqual: @"GWorkspaceRecycleOutOperation"]
-          || [operation isEqual: @"GWorkspaceRenameOperation"])
+          || [operation isEqual: @"GFinderRecycleOutOperation"]
+          || [operation isEqual: @"GFinderRenameOperation"])
         {
           if (isDir)
             {

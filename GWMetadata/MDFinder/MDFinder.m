@@ -273,24 +273,24 @@ static MDFinder *mdfinder = nil;
 - (void)connectWorkspaceApp
 {
   if (workspaceApp == nil) {
-    workspaceApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"GWorkspace" 
+    workspaceApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"GFinder" 
                                                                      host: @""];
 
     if (workspaceApp == nil) {
       int i;
     
       [startAppWin showWindowWithTitle: @"MDFinder"
-                               appName: @"GWorkspace"
+                               appName: @"GFinder"
                              operation: NSLocalizedString(@"starting:", @"")
                           maxProgValue: 80.0];
 
-      [[NSWorkspace sharedWorkspace] launchApplication: @"GWorkspace"];
+      [[NSWorkspace sharedWorkspace] launchApplication: @"GFinder"];
    
       for (i = 1; i <= 80; i++) {
         [startAppWin updateProgressBy: 1.0];
 	      [[NSRunLoop currentRunLoop] runUntilDate:
 		                     [NSDate dateWithTimeIntervalSinceNow: 0.1]];
-        workspaceApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"GWorkspace" 
+        workspaceApp = [NSConnection rootProxyForConnectionWithRegisteredName: @"GFinder" 
                                                                          host: @""];                  
         if (workspaceApp) {
           [startAppWin updateProgressBy: 80.0 - i];
@@ -311,7 +311,7 @@ static MDFinder *mdfinder = nil;
 		           object: [workspaceApp connectionForProxy]];
     } else {
       NSRunAlertPanel(nil,
-              NSLocalizedString(@"unable to contact GWorkspace!", @""),
+              NSLocalizedString(@"unable to contact GFinder!", @""),
               NSLocalizedString(@"Ok", @""),
               nil, 
               nil);  
@@ -329,7 +329,7 @@ static MDFinder *mdfinder = nil;
   workspaceApp = nil;
 
   NSRunAlertPanel(nil, 
-                NSLocalizedString(@"The GWorkspace connection died.", @""),
+                NSLocalizedString(@"The GFinder connection died.", @""),
 					      NSLocalizedString(@"Ok", @""), 
                 nil, 
                 nil);  

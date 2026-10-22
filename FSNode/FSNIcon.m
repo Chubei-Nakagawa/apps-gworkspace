@@ -1784,7 +1784,7 @@ static NSImage *branchImage;
 
       if ([source isEqual: trashPath])
 	{
-	  operation = @"GWorkspaceRecycleOutOperation";
+	  operation = @"GFinderRecycleOutOperation";
 	}
       else
 	{

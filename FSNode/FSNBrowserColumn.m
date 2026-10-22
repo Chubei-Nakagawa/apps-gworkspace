@@ -1471,7 +1471,7 @@ static id <DesktopApplication> desktopApp = nil;
 
   if ([source isEqual: trashPath])
     {
-      operation = @"GWorkspaceRecycleOutOperation";
+      operation = @"GFinderRecycleOutOperation";
     }
   else
     {
@@ -1718,7 +1718,7 @@ static id <DesktopApplication> desktopApp = nil;
 
       if ([source isEqual: trashPath])
 	{
-	  operation = @"GWorkspaceRecycleOutOperation";
+	  operation = @"GFinderRecycleOutOperation";
 	}
       else
 	{

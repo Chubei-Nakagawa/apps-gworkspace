@@ -5,7 +5,7 @@
     ApplicationIcon = "MDFinder.tiff";
     ApplicationName = "MDFinder";
     ApplicationRelease = "1.0";
-    CFBundleIdentifier = "org.gnustep.GWorkspace.MDFinder";
+    CFBundleIdentifier = "org.gnustep.GFinder.MDFinder";
     Authors = (
       "Enrico Sersale <enrico\@fibernet.ro>"
     );

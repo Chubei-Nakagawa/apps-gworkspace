@@ -3427,7 +3427,7 @@ else
 fi
 
 
-ac_config_headers="$ac_config_headers GWorkspace/config.h"
+ac_config_headers="$ac_config_headers GFinder/config.h"
 
 
 
@@ -3468,7 +3468,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files GNUmakefile GWorkspace/GNUmakefile Tools/fswatcher/GNUmakefile"
+ac_config_files="$ac_config_files GNUmakefile GFinder/GNUmakefile Tools/fswatcher/GNUmakefile"
 
 
 cat >confcache <<\_ACEOF
@@ -4160,9 +4160,9 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "GWorkspace/config.h") CONFIG_HEADERS="$CONFIG_HEADERS GWorkspace/config.h" ;;
+    "GFinder/config.h") CONFIG_HEADERS="$CONFIG_HEADERS GFinder/config.h" ;;
     "GNUmakefile") CONFIG_FILES="$CONFIG_FILES GNUmakefile" ;;
-    "GWorkspace/GNUmakefile") CONFIG_FILES="$CONFIG_FILES GWorkspace/GNUmakefile" ;;
+    "GFinder/GNUmakefile") CONFIG_FILES="$CONFIG_FILES GFinder/GNUmakefile" ;;
     "Tools/fswatcher/GNUmakefile") CONFIG_FILES="$CONFIG_FILES Tools/fswatcher/GNUmakefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
